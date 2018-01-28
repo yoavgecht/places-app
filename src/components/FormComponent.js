@@ -1,0 +1,87 @@
+import React from 'react';
+import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 'react-bootstrap';
+
+    class FormComponent extends React.Component {
+     constructor(props) {
+        super();
+        this.google = window.google;
+        this.placeSearch = '', 
+        this.autocomplete = '';
+        this.state = {
+            myLocation: '',
+            lat: '',
+            lng: ''
+        };
+        
+    };
+
+    componentDidMount(){
+        this.initAutocomplete();
+    }
+
+    
+
+     initAutocomplete = () => {
+        // Create the autocomplete object, restricting the search to geographical
+        // location types.
+       
+        this.autocomplete = new this.google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+            {types: ['geocode']});
+
+        // When the user selects an address from the dropdown, populate the address
+        // fields in the form.
+        this.autocomplete.addListener('place_changed', this.placeChanged);
+      }
+
+    placeChanged = () => {
+        this.place = this.autocomplete.getPlace();
+        var locationLatLng = {
+          name: this.place.name,
+          lat: this.place.geometry.location.lat(),
+          lng: this.place.geometry.location.lng(),
+        }
+
+        this.setState({'myLocation': locationLatLng.name, lat: locationLatLng.lat, lng: locationLatLng.lng});
+        this.props.handleLocationChange(locationLatLng);
+        
+    }
+
+     geolocate = () => {
+        var self = this;
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var geolocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            var circle = new self.google.maps.Circle({
+              center: geolocation,
+              radius: position.coords.accuracy
+            });
+            self.autocomplete.setBounds(circle.getBounds());
+          });
+        }
+      }
+
+
+    handleUserInput(e){
+        if(e.currentTarget.value.length >= 2) return this.autocomplete.addListener('place_changed', this.placeChanged);
+    };
+
+    
+    render(){
+        return (     
+        <Form onSubmit={this.props.handleSubmit}>
+        <FormGroup id="formInlineFromDate">
+            <ControlLabel className="pull-left">My Location:</ControlLabel>
+            <FormControl name="myLocation" id="autocomplete" value={this.state.location}  onFocus={this.geolocate} placeholder='New York' onChange={(event) => this.handleUserInput(event)}/>
+        </FormGroup>
+        <Button style={{marginBottom: 30}} name="btn" type="submit" bsStyle="success" bsSize="large" block disabled={!this.state.myLocation}>Send</Button>
+        </Form> 
+        )
+    };
+
+}
+
+export default FormComponent;
