@@ -10,10 +10,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var pool      =    mysql.createPool({
     connectionLimit : 100, //important
-    host     : 'localhost',
-    user     : 'root',
-    password : 'root',
-    database : 'supermarkets',
+    host     : 'us-cdbr-iron-east-05.cleardb.net' || 'localhost',
+    user     : 'b8f4d978e27944' || 'root',
+    password : 'e24f8a88' || 'root',
+    database : 'heroku_bf8336fc1099ee3' || 'supermarkets',
     debug    :  false
 });
 
