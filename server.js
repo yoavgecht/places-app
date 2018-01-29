@@ -1,6 +1,7 @@
 var express =  require('express'),
 mysql = require('mysql');
 const importer = require('node-mysql-importer');
+const port = process.env.PORT || 8080;
 bodyParser  =  require('body-parser'),
 router      =  express.Router(),
 app 		=  express();
@@ -68,5 +69,5 @@ function getSupermarkets(location, res){
 
 
 
-app.listen(8080);
+app.listen(port);
 
