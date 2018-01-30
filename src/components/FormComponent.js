@@ -60,6 +60,7 @@ import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 're
               radius: position.coords.accuracy
             });
             self.autocomplete.setBounds(circle.getBounds());
+            self.props.handleLocationChange(geolocation);
           });
         }
       }
