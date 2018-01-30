@@ -61,7 +61,7 @@ import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 're
               radius: position.coords.accuracy
             });
             self.autocomplete.setBounds(circle.getBounds());
-            self.setState({'myLocation': 'user location', lat: geolocation.lat, lng: geolocation.lng});
+            self.setState({'myLocation': 'Your location', lat: geolocation.lat, lng: geolocation.lng});
             self.props.handleLocationChange(geolocation);
           });
         }
@@ -78,7 +78,7 @@ import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 're
         <Form onSubmit={this.props.handleSubmit}>
         <FormGroup id="formInlineFromDate">
             <ControlLabel className="pull-left">My Location:</ControlLabel>
-            <FormControl name="myLocation" id="autocomplete" value={this.state.location}  onFocus={this.geolocate} placeholder='New York' onChange={(event) => this.handleUserInput(event)}/>
+            <FormControl name="myLocation" id="autocomplete" value={this.state.myLocation}  onFocus={this.geolocate} placeholder='New York' onChange={(event) => this.handleUserInput(event)}/>
         </FormGroup>
         <Button style={{marginBottom: 30}} name="btn" type="submit" bsStyle="success" bsSize="large" block disabled={!this.state.myLocation}>Send</Button>
         </Form> 
