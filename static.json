@@ -10,7 +10,7 @@
     },
   "proxy": {
     "/api": {
-      "target": "http://localhost:8000",
+      "target": "https://react-google-maps.herokuapp.com/",
       "pathRewrite": {
         "^/api": "/"
       }
