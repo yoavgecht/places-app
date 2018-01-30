@@ -18,15 +18,17 @@ var pool      =    mysql.createPool({
 });
 
 
-app.use(express.static(__dirname + '/'))
+app.use(express.static(__dirname + '/'));
 
-
-.post('/locations', function(req, res){
-    console.log('locations');
-    var location = req.body.location;
-    console.log(location);
-	getSupermarkets(location, res);
-})
+router
+    .use(bodyParser.json())
+    .route('/locations')
+        .post(function(req, res){
+        console.log('locations');
+        var location = req.body.location;
+        console.log(location);
+	    getSupermarkets(location, res);
+    })
 
 function getSupermarkets(location, res){
 	console.log('getSupermarkets');
