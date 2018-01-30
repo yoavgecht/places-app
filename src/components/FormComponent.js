@@ -53,13 +53,15 @@ import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 're
           navigator.geolocation.getCurrentPosition(function(position) {
             var geolocation = {
               lat: position.coords.latitude,
-              lng: position.coords.longitude
+              lng: position.coords.longitude,
+              name: 'users location'
             };
             var circle = new self.google.maps.Circle({
               center: geolocation,
               radius: position.coords.accuracy
             });
             self.autocomplete.setBounds(circle.getBounds());
+            self.setState({'myLocation': geolocation.name, lat: geolocation.lat, lng: geolocation.lng});
             self.props.handleLocationChange(geolocation);
           });
         }
