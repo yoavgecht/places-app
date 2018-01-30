@@ -54,7 +54,7 @@ import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 're
             var geolocation = {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
-              name: this.state.myLocation
+              name: self.state.myLocation
             };
             var circle = new self.google.maps.Circle({
               center: geolocation,
