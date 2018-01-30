@@ -61,7 +61,7 @@ import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 're
               radius: position.coords.accuracy
             });
             self.autocomplete.setBounds(circle.getBounds());
-            self.setState({'myLocation': geolocation.name, lat: geolocation.lat, lng: geolocation.lng});
+            self.setState({'myLocation': 'user location', lat: geolocation.lat, lng: geolocation.lng});
             self.props.handleLocationChange(geolocation);
           });
         }
