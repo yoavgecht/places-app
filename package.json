@@ -19,7 +19,7 @@
     "react-scripts": "1.1.0",
     "recompose": "^0.26.0"
   },
-  "proxy": "http://localhost:'. .env.port'",
+  "proxy": "http://localhost:'. .${env.port}'",
   "scripts": {
     "start": "react-scripts start | node server.js",
     "build": "react-scripts build",
