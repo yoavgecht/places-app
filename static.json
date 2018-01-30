@@ -1,0 +1,20 @@
+{
+  "root": "build/",
+  "https_only": true,
+  "routes": {
+    "/**": "index.html"
+  },
+  "headers": {
+    "/**": {
+      "Strict-Transport-Security": "max-age=7776000"
+    },
+  "proxy": {
+    "/api": {
+      "target": "http://localhost:8000",
+      "pathRewrite": {
+        "^/api": "/"
+      }
+    }
+  }
+}
+}
