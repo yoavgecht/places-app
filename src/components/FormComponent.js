@@ -7,6 +7,7 @@ import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 're
         this.google = window.google;
         this.placeSearch = '', 
         this.autocomplete = '';
+        this.geolocate();
     };
 
      state = {
@@ -91,7 +92,7 @@ import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 're
         <Form onSubmit={this.props.handleSubmit}>
         <FormGroup id="formInlineFromDate">
             <ControlLabel className="pull-left">My Location:</ControlLabel>
-            <FormControl name="myLocation" id="autocomplete" onFocus={this.geolocate} placeholder='New York' onChange={(event) => this.handleUserInput(event)}/>
+            <FormControl name="myLocation" id="autocomplete" placeholder='New York' onChange={(event) => this.handleUserInput(event)}/>
         </FormGroup>
         <Button style={{marginBottom: 30}} name="btn" type="submit" bsStyle="success" bsSize="large" block disabled={!this.state.myLocation}>Send</Button>
         </Form> 
