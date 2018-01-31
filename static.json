@@ -10,7 +10,7 @@
     },
 "proxies": {
     "/api/": {
-      "origin": "${API_URL}"
+    "origin": "https://${API_APP_NAME}.herokuapp.com/"
     }
   }
 }
