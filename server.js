@@ -18,23 +18,20 @@ var pool      =    mysql.createPool({
 });
 
 
-app.use(express.static(__dirname + '/'));
+app.use(express.static(__dirname + '/'))
 
-router
-    .use(bodyParser.json())
-    .route('/locations')
-        .post(function(req, res){
-        console.log('locations');
-        var location = req.body.location;
-        console.log(location);
-	    getSupermarkets(location, res);
-    })
+
+.post('/locations', function(req, res){
+    console.log('locations');
+    var location = req.body.location;
+    console.log(location);
+	getSupermarkets(location, res);
+})
 
 function getSupermarkets(location, res){
 	console.log('getSupermarkets');
 	pool.getConnection(function(err,connection){
         if (err) {
-          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
           res.json({"code" : 100, "status" : "Error in connection database"});
           return;
         }   
