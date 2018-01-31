@@ -7,14 +7,16 @@ import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 're
         this.google = window.google;
         this.placeSearch = '', 
         this.autocomplete = '';
-        this.geolocate();
+        // this.state = { myLocation: undefined }
+        this.geolocate(); 
     };
 
+
      state = {
-            myLocation: '',
-            lat: '',
-            lng: ''
-        };
+        myLocation: '', 
+        lat: '',
+        lng: ''
+    };
 
     componentDidMount(){
         this.initAutocomplete();
@@ -56,23 +58,22 @@ import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 're
                 var latlng = {lat: parseFloat(position.coords.latitude), lng: parseFloat(position.coords.longitude)};
                 geocoder.geocode({'location': latlng}, function(results, status){
                 self.locationName = results[0].formatted_address;
-            })
-            var geolocation = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-              name: self.locationName
-            };
+                var geolocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                    name: self.locationName
+                };
 
-            
+                var circle = new self.google.maps.Circle({
+                    center: geolocation,
+                    radius: position.coords.accuracy
+                });
 
-            var circle = new self.google.maps.Circle({
-              center: geolocation,
-              radius: position.coords.accuracy
+                self.autocomplete.setBounds(circle.getBounds());
+                self.setState({'myLocation': self.locationName, lat: geolocation.lat, lng: geolocation.lng});
+                self.props.handleLocationChange(geolocation);
+
             });
-
-            self.autocomplete.setBounds(circle.getBounds());
-            self.setState({'myLocation': self.locationName, lat: geolocation.lat, lng: geolocation.lng});
-            self.props.handleLocationChange(geolocation);
           });
         }
       }
@@ -92,7 +93,7 @@ import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 're
         <Form onSubmit={this.props.handleSubmit}>
         <FormGroup id="formInlineFromDate">
             <ControlLabel className="pull-left">My Location:</ControlLabel>
-            <FormControl name="myLocation" id="autocomplete" placeholder='New York' onChange={(event) => this.handleUserInput(event)}/>
+            <FormControl name="myLocation" defaultValue={this.state.myLocation} ref="locationInput" id="autocomplete" placeholder='New York' onChange={(event) => this.handleUserInput(event)}/>
         </FormGroup>
         <Button style={{marginBottom: 30}} name="btn" type="submit" bsStyle="success" bsSize="large" block disabled={!this.state.myLocation}>Send</Button>
         </Form> 
