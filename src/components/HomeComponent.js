@@ -27,7 +27,7 @@ class HomeComponent extends Component {
             location: {'lat': this.state.lat, 'lng': this.state.lng}
         }).then( (response) =>  {
              this.setState({markers: response.data})
-            console.log(this.locations);
+             console.log(this.locations);
          });
     }
 
