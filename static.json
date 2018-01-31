@@ -1,15 +1,12 @@
 {
   "root": "build/",
-  "routes": {
-    "/**": "index.html"
-  },
   "headers": {
     "/**": {
       "Access-Control-Allow-Origin": "*"
     },
 "proxies": {
     "/api/": {
-    "origin": "https://${API_APP_NAME}.herokuapp.com/locations"
+    "origin": "https://${API_APP_NAME}.herokuapp.com/"
     }
   }
 }
