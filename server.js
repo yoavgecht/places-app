@@ -34,6 +34,7 @@ function getSupermarkets(location, res){
 	console.log('getSupermarkets');
 	pool.getConnection(function(err,connection){
         if (err) {
+          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
           res.json({"code" : 100, "status" : "Error in connection database"});
           return;
         }   
