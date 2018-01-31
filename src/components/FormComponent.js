@@ -7,13 +7,13 @@ import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 're
         this.google = window.google;
         this.placeSearch = '', 
         this.autocomplete = '';
-        this.state = {
+    };
+
+     state = {
             myLocation: '',
             lat: '',
             lng: ''
         };
-        
-    };
 
     componentDidMount(){
         this.initAutocomplete();
@@ -49,19 +49,28 @@ import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 're
 
      geolocate = () => {
         var self = this;
+        var geocoder = new window.google.maps.Geocoder; 
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
+                var latlng = {lat: parseFloat(position.coords.latitude), lng: parseFloat(position.coords.longitude)};
+                geocoder.geocode({'location': latlng}, function(results, status){
+                self.locationName = results[0].formatted_address;
+            })
             var geolocation = {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
-              name: self.state.myLocation
+              name: self.locationName
             };
+
+            
+
             var circle = new self.google.maps.Circle({
               center: geolocation,
               radius: position.coords.accuracy
             });
+
             self.autocomplete.setBounds(circle.getBounds());
-            self.setState({'myLocation': 'Your location', lat: geolocation.lat, lng: geolocation.lng});
+            self.setState({'myLocation': self.locationName, lat: geolocation.lat, lng: geolocation.lng});
             self.props.handleLocationChange(geolocation);
           });
         }
@@ -69,7 +78,11 @@ import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 're
 
 
     handleUserInput(e){
-        if(e.currentTarget.value.length >= 2) return this.autocomplete.addListener('place_changed', this.placeChanged);
+        if(e.currentTarget.value.length >= 2){
+            return this.autocomplete.addListener('place_changed', this.placeChanged);
+        } else{
+            this.setState({myLocation: ''})
+        } 
     };
 
     
@@ -78,7 +91,7 @@ import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 're
         <Form onSubmit={this.props.handleSubmit}>
         <FormGroup id="formInlineFromDate">
             <ControlLabel className="pull-left">My Location:</ControlLabel>
-            <FormControl name="myLocation" id="autocomplete" value={this.state.myLocation}  onFocus={this.geolocate} placeholder='New York' onChange={(event) => this.handleUserInput(event)}/>
+            <FormControl name="myLocation" id="autocomplete" onFocus={this.geolocate} placeholder='New York' onChange={(event) => this.handleUserInput(event)}/>
         </FormGroup>
         <Button style={{marginBottom: 30}} name="btn" type="submit" bsStyle="success" bsSize="large" block disabled={!this.state.myLocation}>Send</Button>
         </Form> 
