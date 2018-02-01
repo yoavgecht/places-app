@@ -8,20 +8,38 @@ app 		=  express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var pool      =    mysql.createPool({
-    connectionLimit : 100, //important
-    host     : 'us-cdbr-iron-east-05.cleardb.net' || 'localhost',
-    user     : 'b8f4d978e27944' || 'root',
-    password : 'e24f8a88' || 'root',
-    database : 'heroku_bf8336fc1099ee3' || 'supermarkets',
-    debug    :  false
-});
+if(port == 8080){
+        var pool      =    mysql.createPool({
+        connectionLimit : 100, //important
+        host     : 'localhost',
+        user     : 'root',
+        password : 'root',
+        database : 'supermarkets',
+        debug    :  false
+    });
+
+} else {
+        var pool      =    mysql.createPool({
+        connectionLimit : 100, //important
+        host     : 'us-cdbr-iron-east-05.cleardb.net',
+        user     : 'b8f4d978e27944',
+        password : 'e24f8a88',
+        database : 'heroku_bf8336fc1099ee3',
+        debug    :  false
+    });
+}
+
+
 
 
 app.use(express.static(__dirname + '/'))
 
+.get('*', (req, res) => {
+    res.sendFile(__dirname + '/build/index.html');
+})
 
-.post('/locations', function(req, res){
+
+.post('/locations', (req, res) => {
     console.log('locations');
     var location = req.body.location;
     console.log(location);
