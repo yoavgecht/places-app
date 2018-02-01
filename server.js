@@ -18,6 +18,7 @@ if(port == 8080){
         database : 'supermarkets',
         debug    :  false
     });
+    console.log('LOCAL');
 
 } else {
         var pool      =    mysql.createPool({
@@ -28,6 +29,8 @@ if(port == 8080){
         database : 'heroku_bf8336fc1099ee3',
         debug    :  false
     });
+
+    console.log('PRODUCTION');
 }
 
 
