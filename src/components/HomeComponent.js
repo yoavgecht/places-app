@@ -23,7 +23,7 @@ class HomeComponent extends Component {
   handleSubmit = (e) => {
         ///send my location to the server
         e.preventDefault();
-         axios.post('/locations', {
+         axios.post('/api', {
             location: {'lat': this.state.lat, 'lng': this.state.lng}
         }).then( (response) =>  {
              this.setState({markers: response.data})

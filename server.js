@@ -39,7 +39,7 @@ app.use(express.static(__dirname + '/'))
 })
 
 
-.post('/locations', (req, res) => {
+.post('/api', (req, res) => {
     console.log('locations');
     var location = req.body.location;
     console.log(location);
