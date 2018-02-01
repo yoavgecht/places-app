@@ -9,7 +9,7 @@
     },
 "proxies": {
     "/api/": {
-    "origin": "https://react-google-maps.herokuapp.com/api"
+    "origin": "https://react-google-maps.herokuapp.com/"
     }
   }
 }
