@@ -7,6 +7,7 @@ router      =  express.Router(),
 app 		=  express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+console.log("SERVER STARTED");
 
 if(port == 8080){
         var pool      =    mysql.createPool({
