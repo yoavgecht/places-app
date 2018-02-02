@@ -17,6 +17,7 @@ class HomeComponent extends Component {
 	}
 
   handleLocationChange = (locationObj) => {
+    this.setState({markers: []});
     return this.setState({location: locationObj.name, lat: locationObj.lat, lng: locationObj.lng, zoom: 16})
   }
 
@@ -35,6 +36,12 @@ class HomeComponent extends Component {
   	this.setState({'lat': latLng.lat, 'lng': latLng.lng});
   }
 
+  handleMarkerClick = (targetMarker) => {
+    console.log(targetMarker);
+  }
+
+  
+
   
   
   render() {
@@ -49,6 +56,8 @@ class HomeComponent extends Component {
         <Row className="show-grid">
            <Col xs={12} sm={12} md={12}>
               <MapComponent 
+                onMarkerClick={this.handleMarkerClick}
+                onMainMarkerClick={this.handleMainMarkerClick}
                 zoom={this.state.zoom}
                 containerElement={<div style={{ height: `600px` }} />}
                 mapElement={<div style={{ height: `600px` }} />}
@@ -58,6 +67,7 @@ class HomeComponent extends Component {
                 lng={this.state.lng}
                 markers={this.state.markers}
                 isMarkerShown={true}
+                isInfoWindowShown={this.state.isInfoWindowShown}
                 />
           </Col>
         </Row>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
+import { withGoogleMap, GoogleMap, Marker, InfoWindow } from "react-google-maps";
 
 
 class MapComponent extends Component {
@@ -11,9 +11,28 @@ class MapComponent extends Component {
       }
     }
 
-     mapLoaded = (map) => {
-       console.log('map loaded', map);
-      }
+    state = {
+       isMainMarkerInfoWindowShown: false
+    }
+
+    handleMainMarkerClick = () => {
+      this.setState({isMainMarkerInfoWindowShown: true})
+    }
+
+    handleMainMarkerInfoWindowCloseClick = () => {
+      this.setState({isMainMarkerInfoWindowShown: false})
+    }
+
+    onMarkerClick = (marker) => {
+      marker.showInfo = true;
+      this.setState({});
+    }
+
+    onMarkerClose = (marker) => {
+      marker.showInfo = false;
+      
+    }
+
 
       
 
@@ -21,12 +40,28 @@ class MapComponent extends Component {
       const markers = this.props.markers || [];
       return (
         <GoogleMap
-          ref={this.mapLoaded.bind(this)}
           zoom={this.props.zoom}
           center={{ lat: this.props.lat, lng: this.props.lng }}>
-          {this.props.isMarkerShown && <Marker position={{ lat: this.props.lat, lng: this.props.lng }}  />}
+          {this.props.isMarkerShown && <Marker onClick={() => this.handleMainMarkerClick()}  position={{ lat: this.props.lat, lng: this.props.lng }}>
+            {this.state.isMainMarkerInfoWindowShown && (<InfoWindow onCloseClick={() => this.handleMainMarkerInfoWindowCloseClick()}>
+                    <div>
+                     <h1>myinfowindow</h1> 
+                    </div>
+                  </InfoWindow>)}
+          </Marker>}
           {this.props.markers.map((marker, index) => (
-              <Marker key={index} {...marker} />
+              <Marker key={index} 
+               animation={window.google.maps.Animation.DROP}
+               onClick={() => this.onMarkerClick(marker)}
+              {...marker} >
+                {marker.showInfo && (
+                  <InfoWindow onCloseClick={() => this.onMarkerClose(marker)}>
+                    <div>
+                     <h1>myinfowindow</h1> 
+                    </div>
+                  </InfoWindow>
+                )}
+              </Marker>
           ))}
         </GoogleMap>
       )
