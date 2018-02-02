@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from "react-google-maps";
+import myLocationImage from '../images/myLocationImage.png';
 
 
 class MapComponent extends Component {
@@ -42,7 +43,7 @@ class MapComponent extends Component {
         <GoogleMap
           zoom={this.props.zoom}
           center={{ lat: this.props.lat, lng: this.props.lng }}>
-          {this.props.isMarkerShown && <Marker onClick={() => this.handleMainMarkerClick()}  position={{ lat: this.props.lat, lng: this.props.lng }}>
+          {this.props.isMarkerShown && <Marker icon={myLocationImage} onClick={() => this.handleMainMarkerClick()}  position={{ lat: this.props.lat, lng: this.props.lng }}>
             {this.state.isMainMarkerInfoWindowShown && (<InfoWindow onCloseClick={() => this.handleMainMarkerInfoWindowCloseClick()}>
                     <div>
                      <h1>myinfowindow</h1> 
