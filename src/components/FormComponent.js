@@ -92,10 +92,10 @@ import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 're
         return (     
         <Form onSubmit={this.props.handleSubmit}>
         <FormGroup id="formInlineFromDate">
-            <ControlLabel className="pull-left">My Location:</ControlLabel>
+            <ControlLabel className="pull-left">Select A Location:</ControlLabel>
             <FormControl name="myLocation" defaultValue={this.state.myLocation} ref="locationInput" id="autocomplete" placeholder='New York' onChange={(event) => this.handleUserInput(event)}/>
         </FormGroup>
-        <Button style={{marginBottom: 30}} name="btn" type="submit" bsStyle="success" bsSize="large" block disabled={!this.state.myLocation}>Send</Button>
+        <Button style={{marginBottom: 30}} name="btn" type="submit" bsStyle="success" bsSize="large" block disabled={!this.state.myLocation}>Find Venues</Button>
         </Form> 
         )
     };
