@@ -2,7 +2,7 @@
   "name": "places",
   "version": "0.1.0",
   "private": true,
-  "homepage" : "https://react-google-maps.herokuapp.com/",
+  "homepage": "https://react-google-maps.herokuapp.com/",
   "dependencies": {
     "axios": "^0.17.1",
     "body-parser": "^1.18.2",
@@ -15,6 +15,7 @@
     "react-bootstrap": "^0.32.0",
     "react-dom": "^16.2.0",
     "react-google-maps": "^9.4.5",
+    "react-google-maps-loader": "^4.1.0",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.0",
@@ -26,7 +27,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm install --only=dev && npm install && npm run build",
-    "deploy": "git add . && git commit -m 'added info window' && git push origin master && git push heroku master"
+    "deploy": "git add . && git commit -m 'updates' && git push origin master"
   },
   "proxy": "http://localhost:8080/"
 }

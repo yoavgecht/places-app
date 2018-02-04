@@ -1,16 +1,15 @@
 import React from 'react';
 import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 'react-bootstrap';
+const google = window.google;
 
     class FormComponent extends React.Component {
      constructor(props) {
         super();
-        this.google = window.google;
         this.placeSearch = '', 
         this.autocomplete = '';
         // this.state = { myLocation: undefined }
-        this.geolocate(); 
+        
     };
-
 
      state = {
         myLocation: '', 
@@ -19,6 +18,11 @@ import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 're
     };
 
     componentDidMount(){
+        window.addEventListener('load', this.handleLoad);
+    }
+
+    handleLoad = () => {
+        this.geolocate();
         this.initAutocomplete();
     }
 
@@ -28,7 +32,7 @@ import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 're
         // Create the autocomplete object, restricting the search to geographical
         // location types.
        
-        this.autocomplete = new this.google.maps.places.Autocomplete(
+        this.autocomplete = new window.google.maps.places.Autocomplete(
             /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
             {types: ['geocode']});
 
@@ -52,7 +56,7 @@ import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 're
 
      geolocate = () => {
         var self = this;
-        var geocoder = new window.google.maps.Geocoder; 
+        var geocoder = new google.maps.Geocoder(); 
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
                 var latlng = {lat: parseFloat(position.coords.latitude), lng: parseFloat(position.coords.longitude)};
@@ -64,7 +68,7 @@ import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 're
                     name: self.locationName
                 };
 
-                var circle = new self.google.maps.Circle({
+                var circle = new google.maps.Circle({
                     center: geolocation,
                     radius: position.coords.accuracy
                 });
