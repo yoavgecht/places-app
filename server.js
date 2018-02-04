@@ -1,7 +1,7 @@
 var express =  require('express'),
 mysql = require('mysql');
 const importer = require('node-mysql-importer');
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3306;
 bodyParser  =  require('body-parser'),
 router      =  express.Router(),
 app 		=  express();
@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 console.log("SERVER STARTED");
 
-if(port == 8080){
+if(port == 3306){
         var pool      =    mysql.createPool({
         host     : 'placesdb.ceryqjmnlczp.eu-central-1.rds.amazonaws.com',
         port     : '3306',
