@@ -1,7 +1,7 @@
 var express =  require('express'),
 mysql = require('mysql');
 const importer = require('node-mysql-importer');
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 5000;
 bodyParser  =  require('body-parser'),
 router      =  express.Router(),
 app 		=  express();
@@ -9,18 +9,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 console.log("SERVER STARTED");
 
-if(port == 8080){
+if(port == 5000){
         var pool      =    mysql.createPool({
-        connectionLimit : 100, //important
-        host     : 'localhost',
-        user     : 'root',
-        password : 'root',
-        database : 'supermarkets',
-        debug    :  false
+        host     : 'placesdb.ceryqjmnlczp.eu-central-1.rds.amazonaws.com',
+        port     : '3306',
+        user     : 'yoavgecht',
+        password : 'Anapurna13',
+        database : 'places'
     });
-    console.log('LOCAL');
+    console.log('AWS');
 
-} else {
+} else if(port == 3000) {
         var pool      =    mysql.createPool({
         connectionLimit : 100, //important
         host     : 'us-cdbr-iron-east-05.cleardb.net',
@@ -30,7 +29,17 @@ if(port == 8080){
         debug    :  false
     });
 
-    console.log('PRODUCTION');
+    console.log('HEROKU');
+} else {
+        var pool      =    mysql.createPool({
+        connectionLimit : 100, //important
+        host     : 'localhost',
+        user     : 'root',
+        password : 'root',
+        database : 'supermarkets',
+        debug    :  false
+    });
+    console.log('LOCAL');
 }
 
 
