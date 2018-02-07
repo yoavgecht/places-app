@@ -10,17 +10,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 console.log("SERVER STARTED");
 
 if(port == 8080){
-        var connection      =    mysql.createConnection({
-        host     : process.env.RDS_HOSTNAME,
-        port     : process.env.RDS_PORT,
-        user     : process.env.RDS_USERNAME,
-        password : process.env.RDS_PASSWORD,
+        var pool      =    mysql.createConnection({
+        host     : 'placesdb.ceryqjmnlczp.eu-central-1.rds.amazonaws.com',
+        port     : '3306',
+        user     : 'yoavgecht',
+        password : 'Annapurna13',
+        database : 'placesdb'
     });
     console.log('AWS');
-    console.log(process.env.RDS_HOSTNAME);
-    console.log(process.env.RDS_PORT);
-    console.log(process.env.RDS_USERNAME);
-    console.log(process.env.RDS_PASSWORD);
 
 } else if(port == 3000) {
         var pool      =    mysql.createPool({
@@ -64,13 +61,14 @@ app.use(express.static(__dirname + '/build'))
 
 function getSupermarkets(location, res){
 	console.log('getSupermarkets');
-	connection.connect(function(err){
+	pool.getConnection(function(err, ðconnection){
         if (err) {
           res.json({"code" : 100, "status" : "Error in connection database"});
           return;
         }   
 
         console.log('connected as id ' + connection.threadId);
+        console.log(location);
         const query = `SELECT latitude, longitude, SQRT(POW(111.2 * (latitude - ${location.lat}), 2) + POW(111.2 * (${location.lng} - longitude) * COS(latitude / 57.3), 2)) AS distance FROM branches HAVING distance < 50 ORDER BY distance LIMIT 30`
 
         connection.query(query, function(err, rows, fields){
