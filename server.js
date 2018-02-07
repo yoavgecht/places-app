@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 console.log("SERVER STARTED");
 
 if(port == 8080){
-        var pool      =    mysql.createConnection({
+        var connection      =    mysql.createConnection({
         host     : process.env.RDS_HOSTNAME,
         port     : process.env.RDS_PORT,
         user     : process.env.RDS_USERNAME,
@@ -60,7 +60,7 @@ app.use(express.static(__dirname + '/build'))
 
 function getSupermarkets(location, res){
 	console.log('getSupermarkets');
-	mysql.getConnection(function(err, ðconnection){
+	connection.connect(function(err, connection){
         if (err) {
           res.json({"code" : 100, "status" : "Error in connection database"});
           return;
