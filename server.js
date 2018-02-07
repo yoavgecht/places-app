@@ -61,7 +61,7 @@ app.use(express.static(__dirname + '/build'))
 
 function getSupermarkets(location, res){
 	console.log('getSupermarkets');
-	pool.getConnection(function(err, ðconnection){
+	pool.getConnection(function(err, connection){
         if (err) {
           res.json({"code" : 100, "status" : "Error in connection database"});
           return;
