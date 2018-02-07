@@ -17,6 +17,10 @@ if(port == 8080){
         password : process.env.RDS_PASSWORD,
     });
     console.log('AWS');
+    console.log(process.env.RDS_HOSTNAME);
+    console.log(process.env.RDS_PORT);
+    console.log(process.env.RDS_USERNAME);
+    console.log(process.env.RDS_PASSWORD);
 
 } else if(port == 3000) {
         var pool      =    mysql.createPool({
