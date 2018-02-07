@@ -10,12 +10,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 console.log("SERVER STARTED");
 
 if(port == 8080){
-        var pool      =    mysql.createPool({
-        host     : 'placesdb.ceryqjmnlczp.eu-central-1.rds.amazonaws.com',
-        port     : '3306',
-        user     : 'yoavgecht',
-        password : 'Anapurna13',
-        database : 'places'
+        var pool      =    mysql.createConnection({
+        host     : process.env.RDS_HOSTNAME,
+        port     : process.env.RDS_PORT,
+        user     : process.env.RDS_USERNAME,
+        password : process.env.RDS_PASSWORD,
     });
     console.log('AWS');
 
@@ -61,7 +60,7 @@ app.use(express.static(__dirname + '/build'))
 
 function getSupermarkets(location, res){
 	console.log('getSupermarkets');
-	pool.getConnection(function(err,connection){
+	pool.getConnection(function(err, ðconnection){
         if (err) {
           res.json({"code" : 100, "status" : "Error in connection database"});
           return;
