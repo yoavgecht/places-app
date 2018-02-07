@@ -60,14 +60,13 @@ app.use(express.static(__dirname + '/build'))
 
 function getSupermarkets(location, res){
 	console.log('getSupermarkets');
-	connection.connect(function(err, connection){
+	connection.connect(function(err){
         if (err) {
           res.json({"code" : 100, "status" : "Error in connection database"});
           return;
         }   
 
         console.log('connected as id ' + connection.threadId);
-        console.log(location);
         const query = `SELECT latitude, longitude, SQRT(POW(111.2 * (latitude - ${location.lat}), 2) + POW(111.2 * (${location.lng} - longitude) * COS(latitude / 57.3), 2)) AS distance FROM branches HAVING distance < 50 ORDER BY distance LIMIT 30`
 
         connection.query(query, function(err, rows, fields){
