@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 console.log("SERVER STARTED");
 
 if(port == 8080){
-        var pool      =    mysql.createConnection({
+        var pool      =    mysql.createPool({
         host     : 'placesdb.ceryqjmnlczp.eu-central-1.rds.amazonaws.com',
         port     : '3306',
         user     : 'yoavgecht',
