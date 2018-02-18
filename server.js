@@ -19,7 +19,7 @@ if(port == 8080){
     });
     console.log('AWS');
 
-} else if(port == 3000) {
+} else if(process.env.PORT) {
         var pool      =    mysql.createPool({
         connectionLimit : 100, //important
         host     : 'us-cdbr-iron-east-05.cleardb.net',
