@@ -28,7 +28,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "heroku-postbuild": "npm install --only=dev && npm install && npm run build",
+    "heroku-postbuild": "npm install --only=dev && npm install && npm run build && serve -s build",
     "deploy": "git add . && git commit -m 'updates' && git push origin master"
   },
   "proxy": "http://localhost:9080/"
