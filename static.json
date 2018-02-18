@@ -10,9 +10,6 @@
 "proxies": {
     "/fetch-destination/": {
       "origin": "https://react-google-maps.herokuapp.com/"
-    },
-     "/add-destination/": {
-      "origin": "https://react-google-maps.herokuapp.com/"
     }
   }
 }
