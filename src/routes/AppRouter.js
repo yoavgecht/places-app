@@ -13,7 +13,7 @@ const AppRouter = () => (
     <HeaderComponent />
     <BrowserRouter>
         <Switch>
-            <Route path="/" component={ShowPlacesComponent} exact={true} />
+            <Route path="/" component={AddPlacesComponent} exact={true} />
             <Route path="/add-destinations" component={AddPlacesComponent} exact={true}/>
             <Route component={NotFound} />
         </Switch>

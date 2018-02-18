@@ -24,11 +24,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "server": "node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm install --only=dev && npm install && npm run build",
     "deploy": "git add . && git commit -m 'updates' && git push origin master"
   },
-  "proxy": "http://localhost:5000/"
+  "proxy": "http://localhost:9080/"
 }
