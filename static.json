@@ -7,10 +7,10 @@
     "/**": {
       "Access-Control-Allow-Origin": "*"
     },
-"proxies": {
-    "/fetch-destination/": {
-      "origin": "https://react-google-maps.herokuapp.com/"
-    }
+  "proxies": {
+      "/api/": {
+        "origin": "${API_URL}"
+      }
   }
 }
 }

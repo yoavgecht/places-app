@@ -50,14 +50,14 @@ app.use(express.static(__dirname + '/build'))
 
 
 
-.get('/fetch-destination', (req, res) => {
+.get('/api/fetch-destination', (req, res) => {
     console.log('fetching destinations from db');
     var location = req.body.location;
     console.log(location);
 	fetchDestination(location, res);
 })
 
-.post('/add-destination', (req, res) => {
+.post('/api/add-destination', (req, res) => {
     console.log('adding a destination to db');
     var location = req.body.location;
     console.log(location);

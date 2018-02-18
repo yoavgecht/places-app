@@ -36,7 +36,7 @@ class addPlacesComponent extends Component {
   }
 
   fetchDestinations = () => {
-    axios.get('/fetch-destination').then( (response) =>  {
+    axios.get('/api/fetch-destination').then( (response) =>  {
           this.setState({markers: response.data})
       });
   } 
@@ -56,7 +56,7 @@ class addPlacesComponent extends Component {
   handleSubmit = (e) => {
         ///send my location to the server
         e.preventDefault();
-         axios.post('/add-destination', {
+         axios.post('/api/add-destination', {
             location: {'lat': this.state.mapLat, 'lng': this.state.mapLng, locationName: this.state.mapLocation, placePhoto: this.state.mapLocationPlacePhoto}
         }).then( (response) =>  {
             this.fetchDestinations();
