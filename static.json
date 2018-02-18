@@ -8,8 +8,11 @@
       "Access-Control-Allow-Origin": "*"
     },
 "proxies": {
-    "/api/": {
-    "origin": "https://react-google-maps.herokuapp.com/"
+    "/fetch-destination/": {
+      "origin": "https://react-google-maps.herokuapp.com/"
+    },
+     "/add-destination/": {
+      "origin": "https://react-google-maps.herokuapp.com/"
     }
   }
 }
