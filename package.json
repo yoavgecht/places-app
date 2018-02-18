@@ -19,15 +19,16 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.0",
-    "recompose": "^0.26.0"
+    "recompose": "^0.26.0",
+    "toastr": "^2.1.4"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm install --only=dev && npm install && npm run build",
     "deploy": "git add . && git commit -m 'updates' && git push origin master"
   },
-  "proxy": "http://localhost:8080/"
+  "proxy": "http://localhost:5000/"
 }

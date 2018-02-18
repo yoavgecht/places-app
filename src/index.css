@@ -13,9 +13,39 @@ input[type=date], input[type=url], input[type=email], input[type=password], inpu
   border: 1px solid #bbb;
 }
 
+.headline {
+  text-align: center;
+}
+
 #map {
-  height: 600px;
+  height: 300px;
   width: 100%;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  padding:0;
+  margin:0;
+  
+  margin: 0px;
+
+}
+
+li h2 {
+  text-align: center;
+}
+
+
+li img {
+  width: 200px!important;
+  height:150px!important;
+  padding:10px;
+  position:relative;
+  left: 30px;
+
 }
 
 footer {
@@ -24,4 +54,9 @@ footer {
   height: 50px;
   width: 100%;
   overflow:hidden;
+}
+
+.place{
+  border:1px solid black;
+  border-radius: 10px;
 }

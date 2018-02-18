@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from "react-google-maps";
-import myLocationImage from '../images/myLocationImage.png';
+import myLocationImage from '../../images/myLocationImage.png';
 const google = window.google;
 
 
@@ -19,15 +19,17 @@ class MapComponent extends Component {
     }
 
     handleMainMarkerClick = () => {
-      this.setState({isMainMarkerInfoWindowShown: true})
+      this.props.onMarkerClick()
     }
 
     handleMainMarkerInfoWindowCloseClick = () => {
-      this.setState({isMainMarkerInfoWindowShown: false})
+      this.props.onInfoWindowCloseClick()
     }
 
     onMarkerClick = (marker) => {
+      console.log(marker);
       marker.showInfo = true;
+      // marker.setAnimation(google.maps.Animation.BOUNCE);
       this.setState({});
     }
 
@@ -35,8 +37,12 @@ class MapComponent extends Component {
       marker.showInfo = false; 
     }
 
-    mapLoaded(map){
-      console.log
+    mapLoaded(Marker){
+    
+    }
+
+    handleLocationClick = () => {
+      this.props.handleLocationClick({})
     }
 
 
@@ -46,13 +52,15 @@ class MapComponent extends Component {
       const markers = this.props.markers || [];
       return (
         <GoogleMap
+          handleLocationClick={this.handleLocationClick}
           ref={this.mapLoaded.bind(this)}
           zoom={this.props.zoom}
-          center={{ lat: this.props.lat, lng: this.props.lng }}>
-          {this.props.isMarkerShown && <Marker icon={{url: myLocationImage, scaledSize: new google.maps.Size(32, 32)}} onClick={() => this.handleMainMarkerClick()}  position={{ lat: this.props.lat, lng: this.props.lng }}>
-            {this.state.isMainMarkerInfoWindowShown && (<InfoWindow onCloseClick={() => this.handleMainMarkerInfoWindowCloseClick()}>
-                    <div>
-                     <h3>{this.props.location}</h3> 
+          center={{ lat: this.props.mapLat, lng: this.props.mapLng }}>
+          {this.props.isUserLocationMarkerShown && <Marker placeId={this.props.placeId} onClick={this.handleMainMarkerClick} icon={{url: myLocationImage}} position={{lat: this.props.userLocationMarkerLat, lng: this.props.userLocationMarkerLng}} animation={google.maps.Animation.DROP}>
+            {this.props.isMainMarkerInfoWindowShown && (<InfoWindow onCloseClick={this.handleMainMarkerInfoWindowCloseClick}>
+                    <div className="info-window-container">
+                     <h3>{this.props.location}</h3>
+                     <img src={this.props.placePhoto} alt=""/> 
                     </div>
                   </InfoWindow>)}
           </Marker>}
@@ -64,12 +72,15 @@ class MapComponent extends Component {
                 {marker.showInfo && (
                   <InfoWindow onCloseClick={() => this.onMarkerClose(marker)}>
                     <div>
-                     <h2>{marker.position.lat + ', ' + marker.position.lng}</h2> 
+                     <h2>{marker.position.placeName}</h2>
+                     <img src={marker.position.placePhoto} alt={marker.position.placeName}/> 
                     </div>
                   </InfoWindow>
                 )}
               </Marker>
           ))}
+           {this.props.addedMarkerLat  &&  this.props.addedMarkerLat ? <Marker position={{lat: this.props.addedMarkerLat, lng: this.props.addedMarkerLng}} animation={google.maps.Animation.DROP} >
+          </Marker> : null}
         </GoogleMap>
       )
     }
