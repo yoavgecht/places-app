@@ -54,8 +54,6 @@ app.use(express.static(__dirname + '/build'))
 
 .get('/api/fetch-destination', (req, res) => {
     console.log('fetching destinations from db');
-    var location = req.body.location;
-    console.log(location);
 	fetchDestination(location, res);
 })
 
