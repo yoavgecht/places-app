@@ -54,7 +54,7 @@ app.use(express.static(__dirname + '/build'))
 
 .get('/api/fetch-destination', (req, res) => {
     console.log('fetching destinations from db');
-	fetchDestination(location, res);
+	fetchDestination(res);
 })
 
 .post('/api/add-destination', (req, res) => {
@@ -145,7 +145,7 @@ addDestination = (location, res) => {
     })
 }
 
-function fetchDestination(location, res){
+function fetchDestination(res){
 	console.log('fetchDestination');
 	pool.getConnection(function(err, connection){
         if (err) {
@@ -154,7 +154,6 @@ function fetchDestination(location, res){
         }   
 
         console.log('connected as id ' + connection.threadId);
-        console.log(location);
         const query = "SELECT * from destinations";
         // const query = `SELECT name, latitude, longitude, SQRT(POW(111.2 * (latitude - ${location.lat}), 2) + POW(111.2 * (${location.lng} - longitude) * COS(latitude / 57.3), 2)) AS distance FROM branches HAVING distance < 50 ORDER BY distance LIMIT 10`
 
