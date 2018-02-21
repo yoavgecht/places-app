@@ -25,6 +25,8 @@ DROP TABLE IF EXISTS "destinations";
 CREATE TABLE "destinations" (
   "id" int(10) NOT NULL AUTO_INCREMENT,
   "placeName" varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  "city" varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  "country" varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   "latitude" DECIMAL( 10, 6 ) NOT NULL,
   "longitude" DECIMAL( 10, 6 ) NOT NULL,
   "placePhoto" VARCHAR(2083) NOT NULL,

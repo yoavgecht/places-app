@@ -45,12 +45,18 @@ const google = window.google;
     placeChanged = () => {
         this.place = this.autocomplete.getPlace();
         console.log(this.place);
+        const splittedAddress = this.place.formatted_address.split(', ');
+        const city = splittedAddress[0].toLowerCase();
+        const country = splittedAddress[splittedAddress.length - 1].toLowerCase();
+
         var locationLatLng = {
           name: this.place.name,
           lat: this.place.geometry.location.lat(),
           lng: this.place.geometry.location.lng(),
           placeId: this.place.place_id,
-          mapLocationPlacePhoto: this.place.photos ? this.place.photos[0].getUrl({'maxWidth': 200, 'maxHeight': 200}) : ''
+          mapLocationPlacePhoto: this.place.photos ? this.place.photos[0].getUrl({'maxWidth': 200, 'maxHeight': 200}) : '',
+          country: country,
+          city: city
         }
 
         this.setState({'myLocation': locationLatLng.name, lat: locationLatLng.lat, lng: locationLatLng.lng, placeId: locationLatLng.placeId});

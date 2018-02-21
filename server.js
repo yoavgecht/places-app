@@ -1,7 +1,9 @@
 var express =  require('express'),
 mysql = require('mysql');
 const importer = require('node-mysql-importer');
-const port = process.env.PORT || 9080;
+const experiences = require('./getExperiences');
+const destinations = require('./searchDestinations');
+const port = process.env.PORT || 8081;
 bodyParser  =  require('body-parser'),
 router      =  express.Router(),
 app 		=  express();
@@ -64,12 +66,39 @@ app.use(express.static(__dirname + '/build'))
 	addDestination(location, res);
 })
 
+.post('/api/fetch-destination-data', (req, res) => {
+     console.log('fatching destination data');
+     const country = req.body.country;
+     const city = req.body.city;
+     destinations.searchDestinations(country, city, (errorMessage, searchResults) => {
+        if(!errorMessage){
+            console.log('Search Results', searchResults);
+        } else {
+            return console.log(errorMessage); 
+        }
+    });
+    
+     const cleanedCountry = req.body.country.replace(/\s+/g, '-');
+     const cleanedCity = req.body.city.replace(/\s+/g, '-');
+     console.log(cleanedCountry);
+     console.log(cleanedCity);
+     experiences.getExperienses(cleanedCountry, cleanedCity, (errorMessage, experiencesResults) => {
+        if(!errorMessage){
+            console.log('experiencesResults', experiencesResults);
+            res.send(experiencesResults);
+        } else {
+            console.log(errorMessage); 
+        }
+    })
+})
+
 .get('*', (req, res) => {
     console.log('GET  *')
     res.sendFile(__dirname + '/build/index.html');
 })
 
 addDestination = (location, res) => {
+    console.log('locationOBJ', location);
     pool.getConnection((err, connection) => {
         if (err) {
           res.json({"code" : 100, "status" : "Error in connection database"});
@@ -82,8 +111,8 @@ addDestination = (location, res) => {
         query1 = mysql.format(query1, inserts1);
         console.log('query1', query1);
 
-        var query2 =  "INSERT INTO ?? (placeName, longitude, latitude, placePhoto) VALUES (?, ?, ?, ?)";
-        var inserts2 = ['destinations', location.locationName.toString(), location.lng, location.lat, location.placePhoto];
+        var query2 =  "INSERT INTO ?? (placeName, city, country, longitude, latitude, placePhoto) VALUES (?, ?, ?, ?, ?, ?)";
+        var inserts2 = ['destinations', location.locationName.toString(), location.city, location.country, location.lng, location.lat, location.placePhoto];
         query2 = mysql.format(query2, inserts2);
         
         connection.query(query1, function(err, rows, fields){
@@ -138,6 +167,8 @@ function fetchDestination(location, res){
                     console.log('MARKER: ', marker);
                     return {
                         position: {
+                            city: marker.city,
+                            country: marker.country,
                             lat: marker.latitude,
                             lng: marker.longitude,
                             placeName: marker.placeName,

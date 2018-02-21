@@ -17,9 +17,8 @@ input[type=date], input[type=url], input[type=email], input[type=password], inpu
   text-align: center;
 }
 
-#map {
-  height: 300px;
-  width: 100%;
+.map {
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 }
 
 ul {
@@ -29,23 +28,36 @@ ul {
 li {
   padding:0;
   margin:0;
-  
+  cursor: pointer;
   margin: 0px;
 
 }
 
-li h2 {
+li h4 {
   text-align: center;
 }
 
 
-li img {
-  width: 200px!important;
-  height:150px!important;
-  padding:10px;
+li img.img-location {
   position:relative;
-  left: 30px;
+  width: 140px;
+  height:90px
+}
 
+li img.img-data {
+  float: left;
+  position:relative;
+  border: 15px solid #666;
+  padding: 10px;
+  margin-right: 20px;
+}
+
+li p.destination-info {
+    font-family: "Lora", serif;
+    font-size: 14px;
+    letter-spacing: 0.015em;
+    line-height: 2em;
+    color: #656565;
 }
 
 footer {

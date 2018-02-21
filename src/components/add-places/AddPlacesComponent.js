@@ -5,6 +5,7 @@ import myLocationImage from '../../images/myLocationImage.png';
 import axios from 'axios';
 import { Grid, Row, Col } from 'react-bootstrap';
 import PlacesComponent from './PlacesComponent';
+import PlacesDataComponent from './PlacesDataComponent';
 import FormComponent from './FormComponent';
 import MapComponent from './MapComponent';
 
@@ -19,6 +20,8 @@ class addPlacesComponent extends Component {
 	    userlocation: '',
       userLocationMarkerLat: 0,
       userLocationMarkerLng: 0,
+      city: '',
+      country: '',
       addedMarkerLat: 0,
       addedMarkerLng: 0,
       userLoactionPlacePhoto: '',
@@ -29,6 +32,7 @@ class addPlacesComponent extends Component {
       placeId: 'ChIJi8mnMiRJABURuiw1EyBCa2o',
       MainMarkerIconUrl: myLocationImage,
       isMainMarkerInfoWindowShown: false,
+      placeData: []
 	}
 
   componentWillMount(){
@@ -45,19 +49,21 @@ class addPlacesComponent extends Component {
     if(isCurrentLocation){
        this.setState({isUserLocationMarkerShown: false, isMainMarkerInfoWindowShown: false});
        this.setState({userLocation: locationObj.name, userLocationMarkerLat: locationObj.lat, userLocationMarkerLng: locationObj.lng, isUserLocationMarkerShown: true, mapLat: locationObj.lat, mapLng: locationObj.lng,
-                  placeId: locationObj.placeId, userLoactionPlacePhoto: locationObj.placePhoto, zoom: 8, mainMarkerLat: locationObj.mainMarkerLat, mainMarkerLng: locationObj.mainMarkerLng});
+                  placeId: locationObj.placeId, userLoactionPlacePhoto: locationObj.placePhoto, zoom: 8, mainMarkerLat: locationObj.mainMarkerLat, mainMarkerLng: locationObj.mainMarkerLng, city: locationObj.city, country: locationObj.country});
     } else {
        this.setState({isUserLocationMarkerShown: true, isMainMarkerInfoWindowShown: false});
        this.setState({mapLocation: locationObj.name, isUserLocationMarkerShown: true, mapLat: locationObj.lat, mapLng: locationObj.lng,
-                  placeId: locationObj.placeId, mapLocationPlacePhoto: locationObj.mapLocationPlacePhoto, zoom: 8, mainMarkerLat: locationObj.mainMarkerLat, mainMarkerLng: locationObj.mainMarkerLng});
+                  placeId: locationObj.placeId, mapLocationPlacePhoto: locationObj.mapLocationPlacePhoto, zoom: 8, mainMarkerLat: locationObj.mainMarkerLat, mainMarkerLng: locationObj.mainMarkerLng, city: locationObj.city, country: locationObj.country});
     }  
   }
 
   handleSubmit = (e) => {
         ///send my location to the server
         e.preventDefault();
+          console.log(this.state.city);
+           console.log(this.state.country);
          axios.post('/api/add-destination', {
-            location: {'lat': this.state.mapLat, 'lng': this.state.mapLng, locationName: this.state.mapLocation, placePhoto: this.state.mapLocationPlacePhoto}
+            location: {'lat': this.state.mapLat, 'lng': this.state.mapLng, locationName: this.state.mapLocation, placePhoto: this.state.mapLocationPlacePhoto, city: this.state.city, country: this.state.country}
         }).then( (response) =>  {
             this.fetchDestinations();
              console.log(response);
@@ -94,7 +100,14 @@ class addPlacesComponent extends Component {
   }
 
   handleLocationClick = (place) => {
-      this.setState({mapLat: place.lat, mapLng: place.lng, zoom: 6})
+      console.log(place);
+      axios.post('/api/fetch-destination-data', {
+            city: place.city,
+            country: place.country
+          }).then( (response) =>  {
+             console.log(response.data);
+             this.setState({placeData: response.data,  mapLat: place.lat, mapLng: place.lng, zoom: 6})
+         });
   }
 
   
@@ -104,13 +117,14 @@ class addPlacesComponent extends Component {
   render() {
 
     return (
-        
+        <div>
         <Row className="show-grid">
         <Col xs={12} sm={12} md={12}>
-           <h1 className="headline">Plan your trip</h1>
-          </Col>
-           <Col xs={12} sm={12} md={12}>
-              <FormComponent handleSubmit={this.handleSubmit} handleLocationChange={this.handleLocationChange} location={this.state.location} lat={this.state.lat} lng={this.state.lng}/>
+            <FormComponent handleSubmit={this.handleSubmit} handleLocationChange={this.handleLocationChange} location={this.state.location} lat={this.state.lat} lng={this.state.lng}/>
+        </Col>
+        </Row>
+        <Row className="show-grid">
+              <Col xs={12} sm={12} md={6}>
                 <MapComponent
                 handleLocationClick={this.handleLocationClick}
                 placePhoto={this.state.placePhoto}
@@ -119,8 +133,8 @@ class addPlacesComponent extends Component {
                 onInfoWindowCloseClick={this.handleInfoWindowCloseClick}
                 onMainMarkerClick={this.handleMainMarkerClick}
                 zoom={this.state.zoom}
-                containerElement={<div style={{ height: `650px` }} />}
-                mapElement={<div style={{ height: `600px` }} />}
+                containerElement={<div className="map" style={{ height: `650px`}} />}
+                mapElement={<div style={{ height: `650px` }} />}
                 location={this.state.location} 
                 branchesLocation={this.state.branchesLocation}
                 mapLat={this.state.mapLat}
@@ -134,10 +148,16 @@ class addPlacesComponent extends Component {
                 isMainMarkerInfoWindowShown={this.state.isMainMarkerInfoWindowShown}
                 />
            </Col>
-            <Col xs={12} sm={12} md={12}>
+            <Col xs={12} sm={12} md={6}>
                 {this.state.markers.length > 0 && <PlacesComponent markers={this.state.markers} handleLocationClick={this.handleLocationClick}/>} 
+            </Col>
+        </Row>
+         <Row className="show-grid">
+          <Col xs={12} sm={12} md={12}>
+                 {this.state.placeData.length > 0 && <PlacesDataComponent placeData={this.state.placeData} />}
           </Col>
-        </Row>        
+         </Row> 
+         </div>       
     );
   }
 }
