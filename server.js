@@ -13,11 +13,11 @@ console.log("SERVER STARTED");
 
 if(port == 8080){
         var pool      =    mysql.createPool({
-        host     : 'placesdb.ceryqjmnlczp.eu-central-1.rds.amazonaws.com',
+        host     : 'destinationsDB.ceryqjmnlczp.eu-central-1.rds.amazonaws.com',
         port     : '3306',
         user     : 'yoavgecht',
         password : 'Annapurna13',
-        database : 'DestinationsDB'
+        database : 'destinationsDB'
     });
     console.log('AWS');
 
