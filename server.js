@@ -3,7 +3,7 @@ mysql = require('mysql');
 const importer = require('node-mysql-importer');
 const experiences = require('./getExperiences');
 const destinations = require('./searchDestinations');
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 9080;
 bodyParser  =  require('body-parser'),
 router      =  express.Router(),
 app 		=  express();
@@ -44,13 +44,7 @@ if(port == 8080){
     console.log('LOCAL');
 }
 
-
-
-
 app.use(express.static(__dirname + '/build')) 
-
-
-
 
 .get('/api/fetch-destination', (req, res) => {
     console.log('fetching destinations from db');

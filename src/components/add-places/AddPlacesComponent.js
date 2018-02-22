@@ -8,6 +8,8 @@ import PlacesComponent from './PlacesComponent';
 import PlacesDataComponent from './PlacesDataComponent';
 import FormComponent from './FormComponent';
 import MapComponent from './MapComponent';
+import LoaderComponent from './LoaderComponent';
+
 
 
 
@@ -149,7 +151,7 @@ class addPlacesComponent extends Component {
                 />
            </Col>
             <Col xs={12} sm={12} md={6}>
-                {this.state.markers.length > 0 && <PlacesComponent markers={this.state.markers} handleLocationClick={this.handleLocationClick}/>} 
+                {this.state.markers.length > 0 ? <PlacesComponent markers={this.state.markers} handleLocationClick={this.handleLocationClick}/> : <LoaderComponent />} 
             </Col>
         </Row>
          <Row className="show-grid">
