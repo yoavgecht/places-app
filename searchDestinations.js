@@ -3,7 +3,10 @@ const request = require('request');
 var searchDestinations = (country, city, callback) => {
     console.log('city', city);
     console.log('country', country);
-    if(city.split(" ").length > 2 || city.indexOf('-') !== -1) city = city.split('-')[0];
+    var cleanedCity = city.replace(/-/g, ' ');
+    var cleanedCountry = country.replace(/-/g, ' ');
+    console.log('cityClean', cleanedCity);
+    console.log('countryClean', cleanedCountry);
     request({
         url: `https://www.lonelyplanet.com/search.json?q=${city}`,
         json: true 

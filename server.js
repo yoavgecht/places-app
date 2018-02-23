@@ -3,7 +3,7 @@ mysql = require('mysql');
 const importer = require('node-mysql-importer');
 const experiences = require('./getExperiences');
 const destinations = require('./searchDestinations');
-const port = process.env.PORT || 9080;
+const port = process.env.PORT || 4000;
 bodyParser  =  require('body-parser'),
 router      =  express.Router(),
 app 		=  express();
@@ -65,16 +65,29 @@ app.use(express.static(__dirname + '/build'))
      destinations.searchDestinations(country, city, (errorMessage, searchResults) => {
         if(!errorMessage){
             console.log('Search Results', searchResults);
+            var uri; 
+           for(var i = 0; i < searchResults.length; i++){
+				if(searchResults[i].type == 'place' && searchResults[i].slug.toLowerCase().indexOf('city') > -1){
+					var uri =  searchResults[i].slug;
+					break;
+				} else if(searchResults[i].type == 'place' && searchResults[i].slug.indexOf(country) > -1 && searchResults[i].name.toLowerCase().indexOf('city') > -1){
+			        var uri =  searchResults[i].slug;
+			        break;
+			    } else if(searchResults[i].type == 'place' && searchResults[i].slug.toLowerCase().indexOf('city') == -1 && searchResults[i].slug.indexOf(country) > -1){
+			        var uri =  searchResults[i].slug;
+			        break;
+			    }
+			}
         } else {
             return console.log(errorMessage); 
         }
-    });
+   
     
      const cleanedCountry = req.body.country.replace(/\s+/g, '-');
      const cleanedCity = req.body.city.replace(/\s+/g, '-');
      console.log(cleanedCountry);
      console.log(cleanedCity);
-     experiences.getExperienses(cleanedCountry, cleanedCity, (errorMessage, experiencesResults) => {
+     experiences.getExperienses(cleanedCountry, cleanedCity, uri, (errorMessage, experiencesResults) => {
         if(!errorMessage){
             console.log('experiencesResults', experiencesResults);
             res.send(experiencesResults);
@@ -82,6 +95,7 @@ app.use(express.static(__dirname + '/build'))
             console.log(errorMessage); 
         }
     })
+     });
 })
 
 .get('*', (req, res) => {
