@@ -34,10 +34,11 @@ li.destinations {
 }
 
 li.activities {
-  padding:0;
-  margin:0;
+  padding: 40px;
+  margin: 10px 0;
   border: 2px solid #666;
   border-radius: 5px;
+  
 }
 
 li h4 {
