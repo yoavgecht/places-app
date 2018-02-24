@@ -17,7 +17,7 @@ if(port == 8080){
         port     : '3306',
         user     : 'yoavgecht',
         password : 'Annapurna13',
-        database : 'destinationsDB'
+        database : 'destinationsdb'
     });
     console.log('AWS');
 
