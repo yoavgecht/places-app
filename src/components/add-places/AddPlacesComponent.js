@@ -18,7 +18,7 @@ class addPlacesComponent extends Component {
     super(props)
   }
 
-  
+
   state = {
       map: null,
       mapLat: 0,
@@ -164,7 +164,7 @@ class addPlacesComponent extends Component {
                 onInfoWindowCloseClick={this.handleInfoWindowCloseClick}
                 onMainMarkerClick={this.handleMainMarkerClick}
                 zoom={this.state.zoom}
-                containerElement={<div className="map" style={{ height: `750px`}} />}
+                containerElement={<div className="map" style={{ height: `650px`}} />}
                 mapElement={<div style={{ height: `100%` }} />}
                 location={this.state.location} 
                 branchesLocation={this.state.branchesLocation}
