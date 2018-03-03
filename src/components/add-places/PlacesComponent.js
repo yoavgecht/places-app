@@ -6,10 +6,7 @@ class PlacesComponent extends React.Component  {
         super();
      }
 
-     handleLocationClick = (e) => {
-        console.log('e', e.target.elements);
-     }
-
+   
       render(){
         return(
              <ul className="widget__list">

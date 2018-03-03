@@ -14,8 +14,13 @@ import LoaderComponent from './LoaderComponent';
 
 
 class addPlacesComponent extends Component {
+  constructor(props) {
+    super(props)
+  }
+
   
   state = {
+      map: null,
       mapLat: 0,
       mapLng: 0,
       mapLocation: '',
@@ -31,10 +36,11 @@ class addPlacesComponent extends Component {
       zoom: 2,
       markers: [],
       isUserLocationMarkerShown: false,
-      placeId: 'ChIJi8mnMiRJABURuiw1EyBCa2o',
+      placeId: '',
       MainMarkerIconUrl: myLocationImage,
       isMainMarkerInfoWindowShown: false,
-      placeData: []
+      placeData: [],
+      showMarkerInfoWindow: false
 	}
 
   componentWillMount(){
@@ -90,7 +96,7 @@ class addPlacesComponent extends Component {
   }
 
   handleMarkerClick = (targetMarker) => {
-    this.setState({isMainMarkerInfoWindowShown: true})
+    this.setState({showMarkerInfoWindow: true});
   }
 
   handleInfoWindowCloseClick = () => {
@@ -110,7 +116,28 @@ class addPlacesComponent extends Component {
              console.log(response.data);
              this.setState({placeData: response.data,  mapLat: place.lat, mapLng: place.lng, zoom: 6})
          });
-  }
+    }
+
+    handleMainMarkerClick = () => {
+      this.onMarkerClick()
+    }
+
+    handleMainMarkerInfoWindowCloseClick = () => {
+      this.onInfoWindowCloseClick()
+    }
+
+    handleMarkerClose = (marker) => {
+     this.setState({showMarkerInfoWindow: false}); 
+    }
+
+    mapLoaded(Marker){
+    
+    }
+
+    handleMarkerClick = (marker) =>{
+      this.setState({showMarkerInfoWindow: !this.state.showMarkerInfoWindow, mapLat: marker.position.lat, mapLng: marker.position.lng});
+    }
+
 
   
 
@@ -132,11 +159,13 @@ class addPlacesComponent extends Component {
                 placePhoto={this.state.placePhoto}
                 placeId={this.state.placeId} 
                 onMarkerClick={this.handleMarkerClick}
+                onMarkerClose={this.handleMarkerClose}
+                isMarkerInfoWindowOpen={this.state.showMarkerInfoWindow}
                 onInfoWindowCloseClick={this.handleInfoWindowCloseClick}
                 onMainMarkerClick={this.handleMainMarkerClick}
                 zoom={this.state.zoom}
-                containerElement={<div className="map" style={{ height: `650px`}} />}
-                mapElement={<div style={{ height: `650px` }} />}
+                containerElement={<div className="map" style={{ height: `750px`}} />}
+                mapElement={<div style={{ height: `100%` }} />}
                 location={this.state.location} 
                 branchesLocation={this.state.branchesLocation}
                 mapLat={this.state.mapLat}

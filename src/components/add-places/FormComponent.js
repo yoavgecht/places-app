@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 'react-bootstrap';
 const google = window.google;
 

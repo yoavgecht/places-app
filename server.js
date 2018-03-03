@@ -3,7 +3,7 @@ mysql = require('mysql');
 const importer = require('node-mysql-importer');
 const experiences = require('./getExperiences');
 const destinations = require('./searchDestinations');
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 9080;
 bodyParser  =  require('body-parser'),
 router      =  express.Router(),
 app 		=  express();
@@ -172,6 +172,7 @@ function fetchDestination(res){
                     console.log('MARKER: ', marker);
                     return {
                         position: {
+                            id: marker.id,
                             city: marker.city,
                             country: marker.country,
                             lat: marker.latitude,
