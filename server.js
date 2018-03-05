@@ -23,7 +23,7 @@ if(port == 8080){
 
 } else if(process.env.PORT) {
         var pool      =    mysql.createPool({
-        connectionLimit : 100, //important
+        connectionLimit : 10, //important
         host     : 'us-cdbr-iron-east-05.cleardb.net',
         user     : 'b303389f03eb1b',
         password : '9f9c997f',
@@ -34,7 +34,7 @@ if(port == 8080){
     console.log('HEROKU');
 } else {
         var pool      =    mysql.createPool({
-        connectionLimit : 1, //important
+        connectionLimit : 10, //important
         host     : 'localhost',
         user     : 'root',
         password : 'root',
@@ -125,7 +125,6 @@ addDestination = (location, res) => {
         query2 = mysql.format(query2, inserts2);
         
         connection.query(query1, function(err, rows, fields){
-            connection.release();
             if(!err) {
                 console.log('rows', rows);
                 console.log('rows length', rows.length);  
