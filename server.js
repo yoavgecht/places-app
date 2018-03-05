@@ -193,8 +193,7 @@ function fetchDestination(res){
         });
 
         connection.on('error', function(err) {      
-              res.send({"code" : 100, "status" : "Error in connection database"});
-              return;     
+               return res.json({"code" : 100, "status" : "Error in connection database"});    
         });
   });
 
