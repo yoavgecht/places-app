@@ -167,7 +167,6 @@ function fetchDestination(res){
         // const query = `SELECT name, latitude, longitude, SQRT(POW(111.2 * (latitude - ${location.lat}), 2) + POW(111.2 * (${location.lng} - longitude) * COS(latitude / 57.3), 2)) AS distance FROM branches HAVING distance < 50 ORDER BY distance LIMIT 10`
 
         connection.query(query, function(err, rows, fields){
-            connection.release();
             if(!err) {  
                 const markers = rows.reverse().map((marker) => {
                     console.log('MARKER: ', marker);
