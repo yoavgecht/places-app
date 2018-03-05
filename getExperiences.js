@@ -10,9 +10,11 @@ var getExperienses = (country, city, uri, callback) => {
         if(error) {
             callback('Unable to connect to Google servers');
         } else if(response.statusCode === 400) {
-             callback('Unable to fetch Experienses');
-        } else if(response.statusCode === 200) {
+             callback('Unable to fetch Experiences');
+        } else if(response.statusCode === 200 && response.body.length > 0) {
             callback(undefined, body);
+        } else {
+            callback(undefined, []);
         }
      });
     } else {
@@ -24,8 +26,10 @@ var getExperienses = (country, city, uri, callback) => {
             callback('Unable to connect to Google servers');
         } else if(response.statusCode === 400) {
              callback('Unable to fetch Experienses');
-        } else if(response.statusCode === 200) {
+        } else if(response.statusCode === 200 && response.body.length > 0) {
             callback(undefined, body);
+        } else {
+            callback(undefined, []);
         }
      });
     } 
