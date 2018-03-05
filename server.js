@@ -101,10 +101,10 @@ app.use(express.static(__dirname + '/build'))
      });
 })
 
-.get('*', (req, res) => {
-    console.log('GET  *')
-    res.sendFile(__dirname + '/build/index.html');
-})
+// .get('*', (req, res) => {
+//     console.log('GET  *')
+//     res.sendFile(__dirname + '/build/index.html');
+// })
 
 addDestination = (location, res) => {
     console.log('locationOBJ', location);
