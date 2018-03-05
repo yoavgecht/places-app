@@ -161,7 +161,6 @@ function fetchDestination(res){
 	pool.getConnection(function(err, connection){
         if (err) {
           res.json({"code" : 100, "status" : "Error in connection database"});
-          return;
         }   
 
         console.log('connected as id ' + connection.threadId);
