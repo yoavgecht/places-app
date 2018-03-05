@@ -12,7 +12,7 @@ class PlacesDataComponent extends React.Component  {
 
       render(){
         return(
-             <ul className="widget__list">
+             <ul className="widget__list2">
                 {this.props.placeData.map((placeData, index) => {
                     return <PlaceDataComponent key={index} tabIndex={index + 1}  placeData={placeData}/>
                 })}

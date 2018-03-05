@@ -28,6 +28,13 @@ ul.widget__list {
   overflow-y: scroll;
 }
 
+ul.widget__list2 {
+  margin-top: 50px;
+  list-style: none;
+  height: 640px;
+  overflow-y: scroll;
+}
+
 li.destinations {
   width:100%;
   height:90px;
