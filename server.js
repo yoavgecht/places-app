@@ -186,7 +186,7 @@ function fetchDestination(res){
                     }
                 })
                 console.log('markers:', markers)
-                res.send(markers);
+                res.json(markers);
             } else {
                 console.log(err);
             }           
