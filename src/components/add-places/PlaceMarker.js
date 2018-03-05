@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Marker } from 'react-google-maps';
 import { PlaceInfoWindow } from './PlaceInfoWindow';
 
-export class PlaceMarker extends Component {
+class PlaceMarker extends Component {
   constructor(props) {
     super(props)
 

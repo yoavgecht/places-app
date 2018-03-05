@@ -22,15 +22,21 @@ input[type=date], input[type=url], input[type=email], input[type=password], inpu
   margin-bottom: 50px;
 }
 
-ul {
+ul.widget__list {
   list-style: none;
+  height: 650px;
+  overflow-y: scroll;
 }
 
 li.destinations {
+  width:100%;
+  height:90px;
   padding:0;
   margin:0;
   cursor: pointer;
   margin: 0px;
+  border: 1px solid #f3f3f3;
+  margin-bottom:20px;
 }
 
 li.activities {
@@ -38,18 +44,27 @@ li.activities {
   margin: 10px 0;
   border: 2px solid #666;
   border-radius: 5px;
-  
 }
 
-li h4 {
+li.destinations h4 {
+    text-align: center;
+    margin: 0;
+    position: relative;
+    top: 30px;
+    right: 60px;
+}
+
+li.activities h4 {
   text-align: center;
 }
 
 
 li img.img-location {
-  position:relative;
+  position: absolute;
   width: 140px;
-  height:90px
+  height: 90px;
+  right: 0;
+  top: 0;
 }
 
 li img.img-data {

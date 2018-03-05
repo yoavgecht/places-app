@@ -14,7 +14,7 @@ class PlacesDataComponent extends React.Component  {
         return(
              <ul className="widget__list">
                 {this.props.placeData.map((placeData, index) => {
-                    return <PlaceDataComponent key={index}  placeData={placeData}/>
+                    return <PlaceDataComponent key={index} tabIndex={index + 1}  placeData={placeData}/>
                 })}
             </ul>
         )

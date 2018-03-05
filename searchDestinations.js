@@ -8,7 +8,7 @@ var searchDestinations = (country, city, callback) => {
     console.log('cityClean', cleanedCity);
     console.log('countryClean', cleanedCountry);
     request({
-        url: `https://www.lonelyplanet.com/search.json?q=${city}`,
+        url: `https://www.lonelyplanet.com/search.json?q=${cleanedCity}`,
         json: true 
     }, (error, response, body) => {
         if(error) {

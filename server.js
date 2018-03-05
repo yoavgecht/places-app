@@ -65,26 +65,29 @@ app.use(express.static(__dirname + '/build'))
      destinations.searchDestinations(country, city, (errorMessage, searchResults) => {
         if(!errorMessage){
             console.log('Search Results', searchResults);
-            var uri; 
-           for(var i = 0; i < searchResults.length; i++){
-				if(searchResults[i].type == 'place' && searchResults[i].slug.toLowerCase().indexOf('city') > -1){
-					var uri =  searchResults[i].slug;
-					break;
-				} else if(searchResults[i].type == 'place' && searchResults[i].slug.indexOf(country) > -1 && searchResults[i].name.toLowerCase().indexOf('city') > -1){
-			        var uri =  searchResults[i].slug;
-			        break;
-			    } else if(searchResults[i].type == 'place' && searchResults[i].slug.toLowerCase().indexOf('city') == -1 && searchResults[i].slug.indexOf(country) > -1){
-			        var uri =  searchResults[i].slug;
-			        break;
+            if(searchResults.length > 0){
+                var uri; 
+                for(var i = 0; i < searchResults.length; i++){
+				    if(searchResults[i].type == 'place' && searchResults[i].slug.toLowerCase().indexOf('city') > -1){
+					    uri =  searchResults[i].slug;
+					    break;
+				    } else if(searchResults[i].type == 'place' && searchResults[i].slug.indexOf(country) > -1 && searchResults[i].name.toLowerCase().indexOf('city') > -1){
+			            uri =  searchResults[i].slug;
+			            break;
+			        } else if(searchResults[i].type == 'place' && searchResults[i].slug.toLowerCase().indexOf('city') == -1 && searchResults[i].slug.indexOf(country) > -1){
+			            uri =  searchResults[i].slug;
+			            break;
+			        }
 			    }
-			}
-        } else {
-            return console.log(errorMessage); 
-        }
-   
+            }  
+
+            } else {
+                 return console.log(errorMessage);
+            }
+        
     
-     const cleanedCountry = req.body.country.replace(/\s+/g, '-');
-     const cleanedCity = req.body.city.replace(/\s+/g, '-');
+     const cleanedCountry = req.body.country.replace(/-/g, ' ');
+     const cleanedCity = req.body.city.replace(/-/g, ' ');
      console.log(cleanedCountry);
      console.log(cleanedCity);
      experiences.getExperienses(cleanedCountry, cleanedCity, uri, (errorMessage, experiencesResults) => {
