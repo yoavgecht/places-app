@@ -11,7 +11,7 @@ class PlacesComponent extends React.Component  {
         return(
              <ul className="widget__list">
                 {this.props.markers.map((place, index) => {
-                    return <PlaceComponent key={index}  place={place} handleLocationClick={this.props.handleLocationClick}/>
+                    return <PlaceComponent key={index} place={place} handleLocationMouseOver={this.props.handleLocationMouseOver}  handleLocationClick={this.props.handleLocationClick}/>
                 })}
             </ul>
         )

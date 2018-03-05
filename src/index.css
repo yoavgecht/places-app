@@ -80,3 +80,7 @@ footer {
   border:1px solid black;
   border-radius: 10px;
 }
+
+.markerAnimation {
+  transform: rotate(25deg);
+}

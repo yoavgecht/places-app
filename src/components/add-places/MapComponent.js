@@ -28,9 +28,13 @@ import PlaceMarker from './PlaceMarker';
                            lng={marker.position.lng}
                            name={marker.position.placeName}
                            photo={marker.position.placePhoto}
+                           locationMarkerClicked={props.locationMarkerClicked}
+                           className={props.locationMarkerClicked.position &&  props.locationMarkerClicked.position.id == marker.position.id ? 'markerAnimation' : null}
+                           bouncedMarker={props.locationMarkerClicked.position &&  props.locationMarkerClicked.position.id == marker.position.id ? props.locationMarkerClicked: null}
+                           marker={marker}
                             />
                 ))}
-           {props.addedMarkerLat  &&  props.addedMarkerLat ? <Marker position={{lat: props.addedMarkerLat, lng: props.addedMarkerLng}} animation={window.google.maps.Animation.DROP} >
+           {props.addedMarkerLat  &&  props.addedMarkerLng ? <Marker position={{lat: props.addedMarkerLat, lng: props.addedMarkerLng}} animation={window.google.maps.Animation.DROP} >
           </Marker> : null}
         </GoogleMap>
 ));

@@ -40,7 +40,9 @@ class addPlacesComponent extends Component {
       MainMarkerIconUrl: myLocationImage,
       isMainMarkerInfoWindowShown: false,
       placeData: [],
-      showMarkerInfoWindow: false
+      showMarkerInfoWindow: false,
+      animation: window.google.maps.Animation.DROP,
+      locationMarkerClicked: ''
 	}
 
   componentWillMount(){
@@ -103,20 +105,20 @@ class addPlacesComponent extends Component {
     this.setState({isMainMarkerInfoWindowShown: false})
   }
 
-  handleMainMarkerClick = (targetMarker) => {
-    console.log(targetMarker);
+
+  handleLocationMouseOver = (place) => {
+      this.handleSelectMarker(place)
+       this.setState({mapLat: place.lat, mapLng: place.lng, zoom: 6})
   }
 
   handleLocationClick = (place) => {
-      console.log(place);
-      axios.post('/api/fetch-destination-data', {
+    axios.post('/api/fetch-destination-data', {
             city: place.city,
             country: place.country
           }).then( (response) =>  {
-             console.log(response.data);
-             this.setState({placeData: response.data,  mapLat: place.lat, mapLng: place.lng, zoom: 6})
+            this.setState({placeData: response.data});
          });
-    }
+  }
 
     handleMainMarkerClick = () => {
       this.onMarkerClick()
@@ -138,7 +140,11 @@ class addPlacesComponent extends Component {
       this.setState({showMarkerInfoWindow: !this.state.showMarkerInfoWindow, mapLat: marker.position.lat, mapLng: marker.position.lng});
     }
 
-
+    handleSelectMarker = (place) => {
+       const markerId = place.id;
+       const index = this.state.markers.findIndex(marker => marker.position.id === markerId);
+       this.setState({locationMarkerClicked: this.state.markers[index]});
+    }
   
 
   
@@ -177,10 +183,12 @@ class addPlacesComponent extends Component {
                 markers={this.state.markers}
                 isUserLocationMarkerShown={this.state.isUserLocationMarkerShown}
                 isMainMarkerInfoWindowShown={this.state.isMainMarkerInfoWindowShown}
+                animation={this.state.animation}
+                locationMarkerClicked={this.state.locationMarkerClicked}
                 />
            </Col>
             <Col xs={12} sm={12} md={6}>
-                {this.state.markers.length > 0 ? <PlacesComponent markers={this.state.markers} handleLocationClick={this.handleLocationClick}/> : <LoaderComponent />} 
+                {this.state.markers.length > 0 ? <PlacesComponent markers={this.state.markers} handleLocationMouseOver={this.handleLocationMouseOver} handleLocationClick={this.handleLocationClick}/> : <LoaderComponent />} 
             </Col>
         </Row>
          <Row className="show-grid">
