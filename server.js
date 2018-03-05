@@ -93,7 +93,7 @@ app.use(express.static(__dirname + '/build'))
      experiences.getExperienses(cleanedCountry, cleanedCity, uri, (errorMessage, experiencesResults) => {
         if(!errorMessage){
             console.log('experiencesResults', experiencesResults);
-            res.json(experiencesResults);
+            res.json({experiencesResults: experiencesResults});
         } else {
             console.log(errorMessage); 
         }
