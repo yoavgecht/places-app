@@ -93,7 +93,7 @@ app.use(express.static(__dirname + '/build'))
      experiences.getExperienses(cleanedCountry, cleanedCity, uri, (errorMessage, experiencesResults) => {
         if(!errorMessage){
             console.log('experiencesResults', experiencesResults);
-            res.send(experiencesResults);
+            res.json(experiencesResults);
         } else {
             console.log(errorMessage); 
         }
@@ -132,7 +132,7 @@ addDestination = (location, res) => {
             	if(rows.length > 0){
                     console.log(rows);
                     console.log('User already chose this place');
-                    res.send('recordExists');
+                    res.json({status: 'recordExists'});
                 } else {
                      console.log('QUERY 2 --->');
                       connection.query(query2, function(err, rows, fields){
@@ -143,13 +143,13 @@ addDestination = (location, res) => {
                              })
                           } else {
                            console.log(err);
-                           res.send('error'); 
+                           res.json({status:'error'}); 
                           }
                       });
                 }
             } else {
                 console.log(err);
-                res.send('error');
+                res.json({status:'error'});
 
             }           
         });
