@@ -134,9 +134,9 @@ addDestination = (location, res) => {
                     res.json({status: 'recordExists'});
                 } else {
                      console.log('QUERY 2 --->');
-                      connection.query(query2, function(err, rows, fields){
-                          if(!err) {
-                             connection.query(query1, function(err, rows, fields){
+                      connection.query(query2, function(err2, rows, fields){
+                          if(!err2) {
+                             connection.query(query1, function(err3, rows, fields){
                                   console.log(rows);
                                   res.json(rows);
                              })
