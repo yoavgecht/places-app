@@ -3,7 +3,7 @@ mysql = require('mysql');
 const importer = require('node-mysql-importer');
 const experiences = require('./getExperiences');
 const destinations = require('./searchDestinations');
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 9080;
 bodyParser  =  require('body-parser'),
 router      =  express.Router(),
 app 		=  express();
@@ -171,7 +171,7 @@ function fetchDestination(res){
         connection.query(query, function(err, rows, fields){
             connection.release();
             if(!err) {  
-                const markers = rows.map((marker) => {
+                const markers = rows.reverse().map((marker) => {
                     console.log('MARKER: ', marker);
                     return {
                         position: {
