@@ -34,7 +34,7 @@ if(port == 8080){
     console.log('HEROKU');
 } else {
         var pool      =    mysql.createPool({
-        connectionLimit : 100, //important
+        connectionLimit : 1, //important
         host     : 'localhost',
         user     : 'root',
         password : 'root',
