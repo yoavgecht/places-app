@@ -4,6 +4,7 @@ const importer = require('node-mysql-importer');
 const experiences = require('./getExperiences');
 const destinations = require('./searchDestinations');
 const port = process.env.PORT || 8080;
+const keys = require('/keys');
 bodyParser  =  require('body-parser'),
 router      =  express.Router(),
 app 		=  express();
@@ -13,33 +14,36 @@ console.log("SERVER STARTED");
 
 if(port == 8080){
         var pool      =    mysql.createPool({
-        host     : 'destinationsdb.ceryqjmnlczp.eu-central-1.rds.amazonaws.com',   
-        port     : '3306',
-        user     : 'yoavgecht',
-        password : 'Annapurna13',
-        database : 'destinationsdb'
+        host     : keys.db.host,   
+        port     : keys.db.port,
+        user     : keys.db.user,
+        password : keys.db.password,
+        database : keys.db.database,
+        debug    : false
     });
     console.log('AWS');
 
 } else if(process.env.PORT) {
         var pool      =    mysql.createPool({
         connectionLimit : 10, //important
-        host     : 'us-cdbr-iron-east-05.cleardb.net',
-        user     : 'b303389f03eb1b',
-        password : '9f9c997f',
-        database : 'heroku_0a52093442b2f9b',
-        debug    :  false
+        host     : keys.db.host,   
+        port     : keys.db.port,
+        user     : keys.db.user,
+        password : keys.db.password,
+        database : keys.db.database,
+        debug    : false
     });
 
     console.log('HEROKU');
 } else {
         var pool      =    mysql.createPool({
         connectionLimit : 100, //important
-        host     : 'localhost',
-        user     : 'root',
-        password : 'root',
-        database : 'destinationsDB',
-        debug    :  false
+        host     : keys.db.host,   
+        port     : keys.db.port,
+        user     : keys.db.user,
+        password : keys.db.password,
+        database : keys.db.database,
+        debug    : false
     });
     console.log('LOCAL');
 }
