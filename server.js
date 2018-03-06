@@ -161,6 +161,7 @@ function fetchDestination(res){
 	console.log('fetchDestination');
 	pool.getConnection(function(err, connection){
         if (err) {
+        consoele.trace(err);
           res.json({"code" : 100, "status" : "Error in connection database"});
         }   
 
@@ -170,6 +171,7 @@ function fetchDestination(res){
 
         connection.query(query, function(err, rows, fields){
             connection.release();
+            consoele.trace(err);
             if(!err) {  
                 const markers = rows.reverse().map((marker) => {
                     console.log('MARKER: ', marker);
@@ -192,10 +194,10 @@ function fetchDestination(res){
             }           
         });
 
-        connection.on('error', function(err) {      
+        connection.on('error', function(err) {
+            consoele.trace(err);      
             res.json({"code" : 100, "status" : "Error in connection database"});    
         });
-        console.trace(err);
   });
 
 }
