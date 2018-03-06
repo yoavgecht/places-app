@@ -23,7 +23,7 @@ if(port == 8080){
 
 } else if(process.env.PORT) {
         var pool      =    mysql.createPool({
-        connectionLimit : 100, //important
+        connectionLimit : 10, //important
         host     : 'us-cdbr-iron-east-05.cleardb.net',
         user     : 'b303389f03eb1b',
         password : '9f9c997f',
@@ -107,15 +107,7 @@ app.use(express.static(__dirname + '/build'))
 // })
 
 addDestination = (location, res) => {
-    console.log('locationOBJ', location);
-    pool.getConnection((err, connection) => {
-        if (err) {
-          return res.json({"code" : 100, "status" : "Error in connection database"});
-          
-        } 
-        console.log('connected as id ' + connection.threadId);
-
-        var query1 = "SELECT * from ?? where ?? = ? AND ?? = ? OR ?? = ?";
+    var query1 = "SELECT * from ?? where ?? = ? AND ?? = ? OR ?? = ?";
         var inserts1 = ['destinations', 'latitude', location.lat.toPrecision(8), 'longitude', location.lng.toPrecision(8), 'placeName', location.locationName.toString()];
         query1 = mysql.format(query1, inserts1);
         console.log('query1', query1);
@@ -123,6 +115,11 @@ addDestination = (location, res) => {
         var query2 =  "INSERT INTO ?? (placeName, city, country, longitude, latitude, placePhoto) VALUES (?, ?, ?, ?, ?, ?)";
         var inserts2 = ['destinations', location.locationName.toString(), location.city, location.country, location.lng, location.lat, location.placePhoto];
         query2 = mysql.format(query2, inserts2);
+
+        pool.getConnection((err, connection) => {
+        if (err) return res.json({"code" : 100, "status" : "Error in connection database"}); 
+
+        console.log('connected as id ' + connection.threadId); 
         
         connection.query(query1, function(err, rows, fields){
             connection.release();
@@ -145,14 +142,15 @@ addDestination = (location, res) => {
                              })
                           } else {
                            console.log(err);
-                           console.log(trace);
+                           console.trace(err);
                            res.json({status:'error'}); 
                           }
                       });
                 }
             } else {
                 console.log(err);
-                res.json({status:'error'});
+                console.trace(err);
+                return res.json({status:'error'});
 
             }           
         });
@@ -164,7 +162,7 @@ function fetchDestination(res){
 	console.log('fetchDestination');
 	pool.getConnection(function(err, connection){
         if (err) {
-        consoele.trace(err);
+          console.trace(err);
           res.json({"code" : 100, "status" : "Error in connection database"});
         }   
 
@@ -174,7 +172,6 @@ function fetchDestination(res){
 
         connection.query(query, function(err, rows, fields){
             connection.release();
-            console.trace(err);
             if(!err) {  
                 const markers = rows.reverse().map((marker) => {
                     console.log('MARKER: ', marker);
@@ -193,6 +190,7 @@ function fetchDestination(res){
                 console.log('markers:', markers)
                 res.json(markers);
             } else {
+                console.trace(err);
                 console.log(err);
             }           
         });
