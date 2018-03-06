@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 console.log("SERVER STARTED");
 
 if(port == 8080){
-        var pool      =    mysql.createPool({
+        var con      =    mysql.createConnection({
         host     : 'destinationsdb.ceryqjmnlczp.eu-central-1.rds.amazonaws.com',   
         port     : '3306',
         user     : 'yoavgecht',
@@ -22,7 +22,7 @@ if(port == 8080){
     console.log('AWS');
 
 } else if(process.env.PORT) {
-        var pool      =    mysql.createPool({
+        var con      =    mysql.createConnection({
         connectionLimit : 10, //important
         host     : 'us-cdbr-iron-east-05.cleardb.net',
         user     : 'b303389f03eb1b',
@@ -33,7 +33,7 @@ if(port == 8080){
 
     console.log('HEROKU');
 } else {
-        var pool      =    mysql.createPool({
+        var con      =    mysql.createConnection({
         connectionLimit : 10, //important
         host     : 'localhost',
         user     : 'root',
@@ -108,7 +108,7 @@ app.use(express.static(__dirname + '/build'))
 
 addDestination = (location, res) => {
     console.log('locationOBJ', location);
-    pool.getConnection((err, connection) => {
+    con.connect((err, connection) => {
         if (err) {
           res.json({"code" : 100, "status" : "Error in connection database"});
           return;
@@ -157,7 +157,7 @@ addDestination = (location, res) => {
 
 function fetchDestination(res){
 	console.log('fetchDestination');
-	pool.getConnection(function(err, connection){
+	con.connect(function(err, connection){
         if (err) {
           res.json({"code" : 100, "status" : "Error in connection database"});
         }   
