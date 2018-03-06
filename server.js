@@ -94,7 +94,6 @@ app.use(express.static(__dirname + '/build'))
         if(!errorMessage){
             console.log('experiencesResults', experiencesResults);
             res.json({experiencesResults: experiencesResults});
-            console.trace(err);
         } else {
             console.log(errorMessage); 
         }
