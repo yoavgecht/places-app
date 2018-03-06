@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 console.log("SERVER STARTED");
 
 if(port == 8080){
-        var con      =    mysql.createConnection({
+        var pool      =    mysql.createPool({
         host     : 'destinationsdb.ceryqjmnlczp.eu-central-1.rds.amazonaws.com',   
         port     : '3306',
         user     : 'yoavgecht',
@@ -22,8 +22,8 @@ if(port == 8080){
     console.log('AWS');
 
 } else if(process.env.PORT) {
-        var con      =    mysql.createConnection({
-        connectionLimit : 10, //important
+        var pool      =    mysql.createPool({
+        connectionLimit : 100, //important
         host     : 'us-cdbr-iron-east-05.cleardb.net',
         user     : 'b303389f03eb1b',
         password : '9f9c997f',
@@ -33,8 +33,8 @@ if(port == 8080){
 
     console.log('HEROKU');
 } else {
-        var con      =    mysql.createConnection({
-        connectionLimit : 10, //important
+        var pool      =    mysql.createPool({
+        connectionLimit : 100, //important
         host     : 'localhost',
         user     : 'root',
         password : 'root',
@@ -108,7 +108,7 @@ app.use(express.static(__dirname + '/build'))
 
 addDestination = (location, res) => {
     console.log('locationOBJ', location);
-    con.connect((err, connection) => {
+    pool.getConnection((err, connection) => {
         if (err) {
           res.json({"code" : 100, "status" : "Error in connection database"});
           return;
@@ -125,6 +125,7 @@ addDestination = (location, res) => {
         query2 = mysql.format(query2, inserts2);
         
         connection.query(query1, function(err, rows, fields){
+            connection.release();
             if(!err) {
                 console.log('rows', rows);
                 console.log('rows length', rows.length);  
@@ -134,9 +135,9 @@ addDestination = (location, res) => {
                     res.json({status: 'recordExists'});
                 } else {
                      console.log('QUERY 2 --->');
-                      connection.query(query2, function(err2, rows, fields){
-                          if(!err2) {
-                             connection.query(query1, function(err3, rows, fields){
+                      connection.query(query2, function(err, rows, fields){
+                          if(!err) {
+                             connection.query(query1, function(err, rows, fields){
                                   console.log(rows);
                                   res.json(rows);
                              })
@@ -157,7 +158,7 @@ addDestination = (location, res) => {
 
 function fetchDestination(res){
 	console.log('fetchDestination');
-	con.connect(function(err, connection){
+	pool.getConnection(function(err, connection){
         if (err) {
           res.json({"code" : 100, "status" : "Error in connection database"});
         }   
@@ -167,6 +168,7 @@ function fetchDestination(res){
         // const query = `SELECT name, latitude, longitude, SQRT(POW(111.2 * (latitude - ${location.lat}), 2) + POW(111.2 * (${location.lng} - longitude) * COS(latitude / 57.3), 2)) AS distance FROM branches HAVING distance < 50 ORDER BY distance LIMIT 10`
 
         connection.query(query, function(err, rows, fields){
+            connection.release();
             if(!err) {  
                 const markers = rows.reverse().map((marker) => {
                     console.log('MARKER: ', marker);
