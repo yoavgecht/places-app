@@ -11,6 +11,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 console.log("SERVER STARTED");
 
+var db_config = {
+        connectionLimit : 10, //important
+        host     : 'us-cdbr-iron-east-05.cleardb.net',
+        user     : 'b303389f03eb1b',
+        password : '9f9c997f',
+        database : 'heroku_0a52093442b2f9b',
+        debug    :  false
+    }
+
 if(port == 8080){
         var pool      =    mysql.createPool({
         host     : 'destinationsdb.ceryqjmnlczp.eu-central-1.rds.amazonaws.com',   
@@ -22,14 +31,7 @@ if(port == 8080){
     console.log('AWS');
 
 } else if(process.env.PORT) {
-        var pool      =    mysql.createPool({
-        connectionLimit : 10, //important
-        host     : 'us-cdbr-iron-east-05.cleardb.net',
-        user     : 'b303389f03eb1b',
-        password : '9f9c997f',
-        database : 'heroku_0a52093442b2f9b',
-        debug    :  false
-    });
+        var pool = mysql.createPool(db_config);
 
     console.log('HEROKU');
 } else {
@@ -192,7 +194,17 @@ function fetchDestination(res){
             } else {
                 console.trace(err);
                 console.log(err);
+                setTimeout(handleDisconnect, 2000);
             }           
+        });
+
+    function handleDisconnect() {
+        connection = mysql.createPool(db_config); // Recreate the connection, since                                            // the old one cannot be reused.
+        connection.getConnection(function(err) {              // The server is either down
+            if(err) {                                     // or restarting (takes a while sometimes).
+            console.log('error when connecting to db:', err);
+            setTimeout(handleDisconnect, 2000); // We introduce a delay before attempting to reconnect,
+            }                                     // to avoid a hot loop, and to allow our node script to
         });
 
         connection.on('error', function(err) {
