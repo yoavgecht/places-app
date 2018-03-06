@@ -143,6 +143,7 @@ addDestination = (location, res) => {
                              })
                           } else {
                            console.log(err);
+                           console.log(trace);
                            res.json({status:'error'}); 
                           }
                       });
