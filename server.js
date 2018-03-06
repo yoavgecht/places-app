@@ -149,12 +149,14 @@ addDestination = (location, res) => {
                            res.json({status:'error'}); 
                           }
                       });
+                      connection.end()
                 }
             } else {
                 console.log(err);
                 res.json({status:'error'});
 
-            }           
+            } 
+            connection.end()          
         });
     })
     console.trace(err);
@@ -194,7 +196,8 @@ function fetchDestination(res){
                 res.json(markers);
             } else {
                 console.log(err);
-            }           
+            }      
+            connection.end()     
         });
 
         connection.on('error', function(err) {
