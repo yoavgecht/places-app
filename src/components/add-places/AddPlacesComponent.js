@@ -116,7 +116,7 @@ class addPlacesComponent extends Component {
             city: place.city,
             country: place.country
           }).then( (response) =>  {
-            this.setState({placeData: response.data});
+            this.setState({placeData: response.data.experiencesResults});
          });
   }
 
