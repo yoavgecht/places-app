@@ -122,7 +122,6 @@ addDestination = (location, res) => {
         console.log('connected as id ' + connection.threadId); 
         
         connection.query(query1, function(err, rows, fields){
-            connection.release();
             if(!err) {
                 console.log('rows', rows);
                 console.log('rows length', rows.length);  
