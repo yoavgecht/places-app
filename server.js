@@ -154,6 +154,7 @@ addDestination = (location, res) => {
             }           
         });
     })
+    console.trace(error);
 }
 
 function fetchDestination(res){
@@ -194,6 +195,7 @@ function fetchDestination(res){
         connection.on('error', function(err) {      
             res.json({"code" : 100, "status" : "Error in connection database"});    
         });
+        console.trace(error);
   });
 
 }
