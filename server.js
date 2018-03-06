@@ -94,7 +94,7 @@ app.use(express.static(__dirname + '/build'))
         if(!errorMessage){
             console.log('experiencesResults', experiencesResults);
             res.json({experiencesResults: experiencesResults});
-            console.trace(error);
+            console.trace(err);
         } else {
             console.log(errorMessage); 
         }
@@ -155,7 +155,7 @@ addDestination = (location, res) => {
             }           
         });
     })
-    console.trace(error);
+    console.trace(err);
 }
 
 function fetchDestination(res){
@@ -196,7 +196,7 @@ function fetchDestination(res){
         connection.on('error', function(err) {      
             res.json({"code" : 100, "status" : "Error in connection database"});    
         });
-        console.trace(error);
+        console.trace(err);
   });
 
 }
