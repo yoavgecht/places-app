@@ -110,8 +110,8 @@ addDestination = (location, res) => {
     console.log('locationOBJ', location);
     pool.getConnection((err, connection) => {
         if (err) {
-          res.json({"code" : 100, "status" : "Error in connection database"});
-          return;
+          return res.json({"code" : 100, "status" : "Error in connection database"});
+          
         } 
         console.log('connected as id ' + connection.threadId);
 
@@ -149,14 +149,12 @@ addDestination = (location, res) => {
                            res.json({status:'error'}); 
                           }
                       });
-                      connection.end()
                 }
             } else {
                 console.log(err);
                 res.json({status:'error'});
 
-            } 
-            connection.end()          
+            }           
         });
     })
     console.trace(err);
@@ -196,8 +194,7 @@ function fetchDestination(res){
                 res.json(markers);
             } else {
                 console.log(err);
-            }      
-            connection.end()     
+            }           
         });
 
         connection.on('error', function(err) {
