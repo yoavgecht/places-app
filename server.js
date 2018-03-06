@@ -171,7 +171,7 @@ function fetchDestination(res){
 
         connection.query(query, function(err, rows, fields){
             connection.release();
-            consoele.trace(err);
+            console.trace(err);
             if(!err) {  
                 const markers = rows.reverse().map((marker) => {
                     console.log('MARKER: ', marker);
