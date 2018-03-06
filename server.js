@@ -133,7 +133,6 @@ addDestination = (location, res) => {
                 } else {
                      console.log('QUERY 2 --->');
                       connection.query(query2, function(err, rows, fields){
-                          connection.release();
                           if(!err) {
                              connection.query(query1, function(err, rows, fields){
                                   connection.release();
@@ -155,7 +154,6 @@ addDestination = (location, res) => {
             }           
         });
     })
-    console.trace(err);
 }
 
 function fetchDestination(res){
