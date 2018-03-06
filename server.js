@@ -196,7 +196,7 @@ function fetchDestination(res){
         });
 
         connection.on('error', function(err) {
-            consoele.trace(err);      
+            console.trace(err);      
             res.json({"code" : 100, "status" : "Error in connection database"});    
         });
   });
