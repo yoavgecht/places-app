@@ -4,7 +4,7 @@ const importer = require('node-mysql-importer');
 const experiences = require('./getExperiences');
 const destinations = require('./searchDestinations');
 const port = process.env.PORT || 8080;
-const keys = require('/keys');
+const keys = require('./keys');
 bodyParser  =  require('body-parser'),
 router      =  express.Router(),
 app 		=  express();
@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 console.log("SERVER STARTED");
 
 if(port == 8080){
-        var pool      =    mysql.createPool({
+        var pool = mysql.createPool({
         host     : keys.db.host,   
         port     : keys.db.port,
         user     : keys.db.user,
@@ -38,12 +38,11 @@ if(port == 8080){
 } else {
         var pool      =    mysql.createPool({
         connectionLimit : 100, //important
-        host     : keys.db.host,   
-        port     : keys.db.port,
-        user     : keys.db.user,
-        password : keys.db.password,
-        database : keys.db.database,
-        debug    : false
+        host     : 'localhost',
+        user     : 'root',
+        password : 'root',
+        database : 'destinationsDB',
+        debug    :  false
     });
     console.log('LOCAL');
 }
