@@ -16,6 +16,7 @@ import LoaderComponent from './LoaderComponent';
 class addPlacesComponent extends Component {
   constructor(props) {
     super(props)
+    const google = window.google
   }
 
 
