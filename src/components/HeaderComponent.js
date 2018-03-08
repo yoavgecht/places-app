@@ -8,17 +8,9 @@ class HeaderComponent extends Component {
         <Navbar className="custom-navbar-style">
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="#home">Plan your trip</a>
+              <a href="#">Plan your trip</a>
             </Navbar.Brand>
           </Navbar.Header>
-          <Nav>
-            <NavItem eventKey={1} href="/add-destinations">
-              Add Destinations
-            </NavItem>
-            <NavItem eventKey={2} href="/">
-              Show Destinations
-            </NavItem>
-          </Nav>
         </Navbar>
     );
   }
