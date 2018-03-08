@@ -13,28 +13,13 @@ class PlaceMarker extends Component {
     }
   }
 
-  componentWillReceiveProps(){
-      if(this.props.bouncedMarker){
-          console.log(this.props.bouncedMarker);
-      }
-  }
-
   clickTooltip() {
-    this.setState({ showTooltip: !this.state.showTooltip, animation: window.google.maps.Animation.BOUNCE })
+    this.setState({ showTooltip: !this.state.showTooltip})
   }
 
   closeWindow() {
     this.setState({ showTooltip: false, animation: null })
   }
-
-  selectedMarker(selectedLocationIndex) {
-     console.log('selectedMarker', selectedLocationIndex);
-  }
-
-  renderMarker(marker){
-      console.log('renderMarker', marker);
-  }
-
  
   render() {
     const {showTooltip} = this.state
@@ -42,7 +27,7 @@ class PlaceMarker extends Component {
 
     return(
       <Marker
-        animation={this.props.bouncedMarker != null  ? window.google.maps.Animation.BOUNCE : null}
+        animation={this.props.bouncedMarker != null ? window.google.maps.Animation.BOUNCE : window.google.maps.Animation.DROP}
         showAnimation={this.props.bouncedMarker}
         markerWithLabel={window.MarkerWithLabel}
         onClick={(e) => this.clickTooltip(marker)}
@@ -57,7 +42,8 @@ class PlaceMarker extends Component {
           <PlaceInfoWindow key={`info${id}`}
                            name={name}
                            photo={photo}
-                           closeWindow={this.closeWindow.bind(this)}/>
+                           closeWindow={this.closeWindow.bind(this)}
+                           />
         )}
       </Marker>
     );

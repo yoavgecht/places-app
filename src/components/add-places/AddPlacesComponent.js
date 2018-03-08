@@ -41,7 +41,6 @@ class addPlacesComponent extends Component {
       isMainMarkerInfoWindowShown: false,
       placeData: [],
       showMarkerInfoWindow: false,
-      animation: window.google.maps.Animation.DROP,
       locationMarkerClicked: ''
 	}
 
@@ -183,7 +182,6 @@ class addPlacesComponent extends Component {
                 markers={this.state.markers}
                 isUserLocationMarkerShown={this.state.isUserLocationMarkerShown}
                 isMainMarkerInfoWindowShown={this.state.isMainMarkerInfoWindowShown}
-                animation={this.state.animation}
                 locationMarkerClicked={this.state.locationMarkerClicked}
                 />
            </Col>
