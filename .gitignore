@@ -8,6 +8,7 @@
 
 # production
 
+/.vscode
 
 # misc
 .DS_Store
@@ -25,3 +26,5 @@ keys.js
 
 
 destinations.sql
+static.json
+Procfile
