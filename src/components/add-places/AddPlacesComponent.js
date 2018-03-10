@@ -161,6 +161,8 @@ class addPlacesComponent extends Component {
         <Row className="show-grid">
               <Col xs={12} sm={12} md={6}>
                 <MapComponent
+                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLul4Gv86ISIVcKYmaeXc7QirXSdgQfrs&libraries=places"
+                loadingElement={<div style={{ height: `100%` }} />}
                 handleLocationClick={this.handleLocationClick}
                 placePhoto={this.state.placePhoto}
                 placeId={this.state.placeId} 

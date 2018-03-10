@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel } from 'react-bootstrap';
-const google = window.google;
+
 
     class FormComponent extends React.Component {
         constructor(props) {
@@ -66,7 +66,7 @@ const google = window.google;
 
      geolocate = () => {
         var self = this;
-        var geocoder = new google.maps.Geocoder(); 
+        var geocoder = new window.google.maps.Geocoder(); 
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
                 var latlng = {lat: parseFloat(position.coords.latitude), lng: parseFloat(position.coords.longitude)};
@@ -80,7 +80,7 @@ const google = window.google;
                     placeId: self.placeId
                 };
 
-                var circle = new google.maps.Circle({
+                var circle = new window.google.maps.Circle({
                     center: geolocation,
                     radius: position.coords.accuracy
                 });

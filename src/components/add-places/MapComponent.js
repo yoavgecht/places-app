@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { withGoogleMap, GoogleMap, Marker, InfoWindow } from "react-google-maps";
+import { withGoogleMap, withScriptjs, GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import myLocationImage from '../../images/myLocationImage.png';
 import PlaceMarker from './PlaceMarker';
 
 
-  const MapComponent = withGoogleMap(props => (
+  const MapComponent = withScriptjs(withGoogleMap((props) => 
   <GoogleMap
           containerElement={props.containerElement}
           loadingElement={props.loadingElement}
