@@ -2,7 +2,7 @@
   "name": "places",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://react-google-maps.herokuapp.com/",
+  "homepage": "http://ec2-18-196-246-145.eu-central-1.compute.amazonaws.com/",
   "dependencies": {
     "axios": "^0.17.1",
     "body-parser": "^1.18.2",
@@ -30,7 +30,8 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm install --only=dev && npm install && npm run build",
-    "deploy": "git add . && git commit -m 'updates' && git push origin master"
+    "deploy": "git add . && git commit -m 'updates' && git push origin master",
+    "refresh": "git rm -r --cached . && git add . && git commit -m 'fixed untracked files' && git push origin master"
   },
   "proxy": "http://localhost:9080/"
 }
